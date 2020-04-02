@@ -28,5 +28,7 @@ namespace App.Models
         //public DateTime BirthDate { get; set; }
 
         public string UserRoles { get; set; }
+
+        public ICollection<Book> Books { get; set; }
     }
 }

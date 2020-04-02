@@ -15,8 +15,11 @@ namespace App.Models
 
         [Required]
         [MaxLength(32, ErrorMessage = "Book title is to long (max 32 characters)")]
-        [MinLength(2, ErrorMessage = "Book title is to short (min 2 characters)")]
+        [MinLength(1, ErrorMessage = "Book title is to short (min 1 characters)")]
         public string Title { get; set; }
+
+        [MaxLength(1024, ErrorMessage = "Description is to long (max 1024 characters)")]
+        public string Description { get; set; }
 
         [Required]
         [MaxLength(32, ErrorMessage = "Name is to long (max 32 characters)")]
@@ -31,7 +34,7 @@ namespace App.Models
         [Required]
         public Library Library { get; set; }
 
-        //TODO: Add User relation 1 user : many books
+        public User  User { get; set; }
 
         [NotMapped]
         public string AuthorFullName { get => AuthorName + ' ' + AuthorSurname; }
