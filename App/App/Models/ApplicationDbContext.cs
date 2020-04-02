@@ -11,6 +11,6 @@ namespace App.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<AppUser> Users { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

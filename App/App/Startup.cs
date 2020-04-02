@@ -29,7 +29,7 @@ namespace App
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<ApplicationDbContext>(opts =>
-            opts.UseSqlServer(@"Server=.\SQLEXPRESS;Database=LibraryCMS;Trusted_Connection=True;")
+            opts.UseSqlServer(@"Server=.\SQLEXPRESS;Database=LibraryCMS;User Id=Library;Password=Library;MultipleActiveResultSets=true;")
             );
         }
 

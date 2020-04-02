@@ -22,9 +22,9 @@ namespace App.Controllers
 
         //GET: api/AppUsers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetAppUser()
+        public async Task<ActionResult<IEnumerable<User>>> GetAppUser()
         {
-            return await _context.AppUser.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         //[HttpGet]
@@ -35,28 +35,28 @@ namespace App.Controllers
 
         // GET: api/AppUsers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetAppUser(string id)
+        public async Task<ActionResult<User>> GetAppUser(string id)
         {
-            var appUser = await _context.AppUser.FindAsync(id);
+            var AppUser = await _context.Users.FindAsync(id);
 
-            if (appUser == null)
+            if (AppUser == null)
             {
                 return NotFound();
             }
 
-            return appUser;
+            return AppUser;
         }
 
         // PUT: api/AppUsers/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAppUser(string id, AppUser appUser)
+        public async Task<IActionResult> PutAppUser(string id, User AppUser)
         {
-            if (id != appUser.UserID)
+            if (id != AppUser.UserID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(appUser).State = EntityState.Modified;
+            _context.Entry(AppUser).State = EntityState.Modified;
 
             try
             {
@@ -79,33 +79,33 @@ namespace App.Controllers
 
         // POST: api/AppUsers
         [HttpPost]
-        public async Task<ActionResult<AppUser>> PostAppUser(AppUser appUser)
+        public async Task<ActionResult<User>> PostAppUser(User AppUser)
         {
-            _context.AppUser.Add(appUser);
+            _context.Users.Add(AppUser);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAppUser", new { id = appUser.UserID }, appUser);
+            return CreatedAtAction("GetAppUser", new { id = AppUser.UserID }, AppUser);
         }
 
         // DELETE: api/AppUsers/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<AppUser>> DeleteAppUser(string id)
+        public async Task<ActionResult<User>> DeleteAppUser(string id)
         {
-            var appUser = await _context.AppUser.FindAsync(id);
-            if (appUser == null)
+            var AppUser = await _context.Users.FindAsync(id);
+            if (AppUser == null)
             {
                 return NotFound();
             }
 
-            _context.AppUser.Remove(appUser);
+            _context.Users.Remove(AppUser);
             await _context.SaveChangesAsync();
 
-            return appUser;
+            return AppUser;
         }
 
         private bool AppUserExists(string id)
         {
-            return _context.AppUser.Any(e => e.UserID == id);
+            return _context.Users.Any(e => e.UserID == id);
         }
     }
 }
