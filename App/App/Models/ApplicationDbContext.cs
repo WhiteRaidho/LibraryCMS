@@ -8,7 +8,6 @@ namespace App.Models
 {
     public class ApplicationDbContext : DbContext
     {
-        //DbSet
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
