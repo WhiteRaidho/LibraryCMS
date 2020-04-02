@@ -11,7 +11,7 @@ namespace App.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<AppUser> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Library> Libraries { get; set; }
         public DbSet<Location> Locations { get; set; }
