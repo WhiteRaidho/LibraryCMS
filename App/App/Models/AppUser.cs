@@ -18,13 +18,15 @@ namespace App.Models
         [MinLength(6, ErrorMessage = "Password too short"), MaxLength(32, ErrorMessage = "Password too long")]
         public string UserPassword { get; set; }
 
-        //[RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Email is not valid.")]
-        //public string Email { get; set; }
+        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Email is not valid.")]
+        public string Email { get; set; }
 
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         //[DataType(DataType.Text)]
         //public DateTime BirthDate { get; set; }
+
+        public string UserRoles { get; set; }
     }
 }

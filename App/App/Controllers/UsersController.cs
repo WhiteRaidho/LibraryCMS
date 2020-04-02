@@ -2,61 +2,55 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using App.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using App.Models;
 
 namespace App.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppUsersController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public AppUsersController(ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        //GET: api/AppUsers
+        // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAppUser()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }
 
-        //[HttpGet]
-        //public IEnumerable<AppUser> GetAppUsers()
-        //{
-        //    return _context.AppUser.ToList();
-        //}
-
-        // GET: api/AppUsers/5
+        // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetAppUser(string id)
+        public async Task<ActionResult<User>> GetUser(string id)
         {
-            var AppUser = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
 
-            if (AppUser == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return AppUser;
+            return user;
         }
 
-        // PUT: api/AppUsers/5
+        // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAppUser(string id, User AppUser)
+        public async Task<IActionResult> PutUser(string id, User user)
         {
-            if (id != AppUser.UserID)
+            if (id != user.UserID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(AppUser).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -64,7 +58,7 @@ namespace App.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AppUserExists(id))
+                if (!UserExists(id))
                 {
                     return NotFound();
                 }
@@ -77,33 +71,33 @@ namespace App.Controllers
             return NoContent();
         }
 
-        // POST: api/AppUsers
+        // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> PostAppUser(User AppUser)
+        public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.Users.Add(AppUser);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAppUser", new { id = AppUser.UserID }, AppUser);
+            return CreatedAtAction("GetUser", new { id = user.UserID }, user);
         }
 
-        // DELETE: api/AppUsers/5
+        // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteAppUser(string id)
+        public async Task<ActionResult<User>> DeleteUser(string id)
         {
-            var AppUser = await _context.Users.FindAsync(id);
-            if (AppUser == null)
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(AppUser);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
-            return AppUser;
+            return user;
         }
 
-        private bool AppUserExists(string id)
+        private bool UserExists(string id)
         {
             return _context.Users.Any(e => e.UserID == id);
         }
