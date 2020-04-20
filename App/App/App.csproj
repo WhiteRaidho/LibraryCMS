@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200404233804_006_Roles.cs" />
+    <Compile Remove="Migrations\20200404233804_006_Roles.Designer.cs" />
+    <Compile Remove="Migrations\20200420185348_007_Borrows.cs" />
+    <Compile Remove="Migrations\20200420185348_007_Borrows.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.4.10" />

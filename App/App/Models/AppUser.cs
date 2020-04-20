@@ -10,8 +10,8 @@ namespace App.Models
     [Table("Users")]
     public class User
     {
-        [Key]
-        public string UserID { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string UserID { get; set; } = Guid.NewGuid().ToString();
         
         [Required, MinLength(6, ErrorMessage = "User name too short"), MaxLength(32, ErrorMessage = "User name too long")]
         public string UserName { get; set; }
@@ -28,10 +28,15 @@ namespace App.Models
 
         //[DataType(DataType.Text)]
         //public DateTime BirthDate { get; set; }
+        
+        public bool IsAdmin { get; set; }
 
-        public string UserRoles { get; set; }
+        public ICollection<Borrow> Borrows { get; set; }
 
-        public ICollection<Book> Books { get; set; }
+        //HACK for librarian only, books that librarian borrow to someone and one that he get returned
+        public ICollection<Borrow> BorrowedBooks { get; set; }
+        public ICollection<Borrow> ReturnedBooks { get; set; }
+
         public ICollection<Review> Reviews { get; set; }
     }
 }
