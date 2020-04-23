@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 namespace App
 {
@@ -29,8 +30,12 @@ namespace App
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<ApplicationDbContext>(opts =>
-            opts.UseSqlServer(@"Server=.\SQLEXPRESS;Database=LibraryCMS;User Id=Library;Password=Library;MultipleActiveResultSets=true;")
+                opts.UseSqlServer(@"Server=.\SQLEXPRESS;Database=LibraryCMS;User Id=Library;Password=Library;MultipleActiveResultSets=true;")
             );
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library CMS API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +53,14 @@ namespace App
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            // Swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c => 
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library CMS API");
+            });
+
         }
     }
 }
