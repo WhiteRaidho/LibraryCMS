@@ -9,7 +9,7 @@ namespace App.ViewModels
 {
     public class AutoMapperProfile : Profile
     {
-        public AutoMapperProfile()
+        public AutoMapperProfile() : base()
         {
             UserProfile();
         }

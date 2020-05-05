@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Extensions;
 using App.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +39,7 @@ namespace App
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library CMS API", Version = "v1" });
             });
             services.AddAutoMapper(typeof(Startup));
+            services.RegisterDataServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +55,7 @@ namespace App
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
 
             // Swagger
