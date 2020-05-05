@@ -35,6 +35,7 @@ namespace App.Models
         public Library Library { get; set; }
 
         public ICollection<Borrow> Borrows { get; set; }
+        public ICollection<Review> Reviews { get; set; }
 
         [NotMapped]
         public string AuthorFullName { get => AuthorName + ' ' + AuthorSurname; }

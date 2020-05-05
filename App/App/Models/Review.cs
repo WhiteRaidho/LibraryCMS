@@ -21,5 +21,8 @@ namespace App.Models
 
         [Required]
         public User User { get; set; }
+
+        [Required]
+        public Book Book { get; set; }
     }
 }
