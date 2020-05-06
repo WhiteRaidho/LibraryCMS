@@ -19,6 +19,8 @@ export default {
 <style lang="scss">
 body {
   margin: 0px;
+  background-image: url("../src/assets/library_bg.jpg");
+  background-attachment: fixed;
 }
 
 #app {
@@ -27,9 +29,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #0c0f13;
-  background-image: url("../src/assets/library_bg.jpg");
-  background-size: cover;
-  background-attachment: fixed;
   display: flex;
   flex-direction: column;
 }
