@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using App.Extensions;
 using App.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -40,6 +41,12 @@ namespace App
             });
             services.AddAutoMapper(typeof(Startup));
             services.RegisterDataServices();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://dev-542381.okta.com/oauth2/default";
+                    options.Audience = "api://default";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +63,7 @@ namespace App
             }
 
             //app.UseHttpsRedirection();
+            app.UseAuthentication(); //must to be above UseMvc()
             app.UseMvc();
 
             // Swagger
