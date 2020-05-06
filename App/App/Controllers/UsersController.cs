@@ -19,12 +19,12 @@ namespace App.Controllers
     public class UsersController : ControllerBase
     {
         protected IMapper Mapper { get; }
-        protected UserService Users { get; }
+        protected UsersService Users { get; }
 
-        public UsersController(IMapper mapper, UserService userService)
+        public UsersController(IMapper mapper, UsersService usersService)
         {
             Mapper = mapper;
-            Users = userService;
+            Users = usersService;
         }
 
         // GET: api/Users/me
@@ -34,7 +34,7 @@ namespace App.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<UserViewModel>> GetMe()
         {
-            var me = await Users.GetUserAsync("admin"); // TODO Get user by id from auth
+            var me = Users.GetUser("admin"); // TODO Get user by id from auth
             if (me == null) return NotFound();
 
             var result = Mapper.Map<UserViewModel>(me);

@@ -12,10 +12,17 @@ namespace App.ViewModels
         public AutoMapperProfile() : base()
         {
             UserProfile();
+            BookProfile();
         }
         protected void UserProfile()
         {
             CreateMap<User, UserViewModel>();
+        }
+
+        protected void BookProfile()
+        {
+            CreateMap<Book, BookListItemViewModel>();
+            CreateMap<Book, BookViewModel>();
         }
     }
 
