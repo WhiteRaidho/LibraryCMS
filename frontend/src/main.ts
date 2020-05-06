@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./controls/router";
 import store from "@/store";
+import "bootstrap";
 
 //Controls
 import '@/controls/store';
