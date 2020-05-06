@@ -31,6 +31,8 @@ namespace App.Models
         
         public bool IsAdmin { get; set; }
 
+        public string Token { get; set; }
+
         public ICollection<Borrow> Borrows { get; set; }
 
         //HACK for librarian only, books that librarian borrow to someone and one that he get returned

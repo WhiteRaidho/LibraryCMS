@@ -13,7 +13,7 @@ using App.ViewModels;
 
 namespace App.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -27,6 +27,7 @@ namespace App.Controllers
             Users = usersService;
         }
 
+        #region GetMe()
         // GET: api/Users/me
         [HttpGet("me")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -40,6 +41,19 @@ namespace App.Controllers
             var result = Mapper.Map<UserViewModel>(me);
             return (ActionResult<UserViewModel>)result;
         }
+        #endregion
+
+        #region Authenticate()
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody]AuthenticateModel model)
+        {
+            var user = Users.Authenticate(model.Username, model.Password);
+
+            if (user == null) return BadRequest(new { message = "Username or password is incorrect" });
+            return Ok(user);
+        }
+        #endregion
 
         //// GET: api/Users/5
         //[HttpGet("{id}")]
