@@ -1,13 +1,14 @@
 <template>
   <div id="navbar">
     <div id="navbar-left">
-      <router-link to="/">Menu Biblioteka</router-link>
+      <!-- <router-link to="/">Menu Biblioteka</router-link> -->
+      <Menu />
     </div>
     <div id="navbar-right">
       <a href="/">       <!-- TODO: URL to User Account -->
         <img src="@/assets/svg_icons/Person.svg" id="image" />
       </a>
-      <a href="/">       <!-- TODO: URL to Borrowed Books -->
+      <a href="/">  <!-- TODO: URL to Borrowed Books -->
         <img src="@/assets/svg_icons/Bookmark.svg" id="image" />
       </a>
       <a href="/About">  <!-- TODO: URL to Liked Books -->
@@ -18,10 +19,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Menu } from "@/components/Menu";
 
-@Component
-export default class NavBar extends Vue {}
+export default {
+  name: 'Navbar',
+  components: {
+    'Menu': Menu
+  }
+}
 </script>
 
 <style lang="scss">
