@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="app">
     <NavBar />
     <router-view />
   </div>
@@ -23,7 +23,7 @@ body {
   background-attachment: fixed;
 }
 
-#app {
+.app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
