@@ -15,11 +15,12 @@
         <img src="@/assets/svg_icons/Heart.svg" class="image" />
       </a>
     </div>
+    
   </div>
 </template>
 
 <script lang="ts">
-import Menu from "./Menu";
+import Menu from "./Menu.vue";
 
 export default {
   name: 'Navbar',
@@ -38,7 +39,7 @@ export default {
   padding-bottom: 5px;
   padding-top: 5px;
   // background-color: #f6f6f6;
-  background-color: #464646;
+  background-color: var(--main-white-color);
   text-align: unset;
   display: flex;
   flex-direction: row;
