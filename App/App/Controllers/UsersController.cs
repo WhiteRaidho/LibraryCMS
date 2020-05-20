@@ -51,7 +51,8 @@ namespace App.Controllers
             var user = Users.Authenticate(model.Username, model.Password);
 
             if (user == null) return BadRequest(new { message = "Username or password is incorrect" });
-            return Ok(user);
+            var result = Mapper.Map<UserViewModel>(user);
+            return Ok(result);
         }
         #endregion
 

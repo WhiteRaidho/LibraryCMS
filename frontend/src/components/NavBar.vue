@@ -27,7 +27,10 @@ export default class NavBar extends Vue {}
 <style lang="scss">
 #navbar {
   padding: 20px;
-  background-color: #f6f6f6;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  // background-color: #f6f6f6;
+  background-color: #464646;
   text-align: unset;
   display: flex;
   flex-direction: row;
@@ -52,6 +55,13 @@ export default class NavBar extends Vue {}
     margin-right: 15px;
     width: 30px;
     height: 30px;
+    
+  }
+
+  .circle-border {
+    border: 2px solid #707070;
+    box-sizing: border-box;
+    border-radius: 100%;
   }
 }
 </style>
