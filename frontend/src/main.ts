@@ -6,7 +6,8 @@ import "bootstrap";
 
 //Controls
 import '@/controls/store';
-import '@/controls/router'
+import '@/controls/router';
+import '@/controls/axios';
 
 Vue.config.productionTip = false;
 
