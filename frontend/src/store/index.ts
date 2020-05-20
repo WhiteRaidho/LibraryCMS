@@ -1,8 +1,9 @@
-import Vuex from "vuex";
-import "@/controls/store";
+import Vuex from 'vuex';
+import '@/controls/store';
 
 export default new Vuex.Store({
-  modules: {
-    //here are modules
-  }
+    modules: {
+        //here are modules
+    }
 });
+

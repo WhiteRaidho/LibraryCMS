@@ -5,16 +5,14 @@ import store from "@/store";
 import "bootstrap";
 
 //Controls
-import "@/controls/store";
-import "@/controls/router";
-import "@/controls/axios";
-import vuetify from "./plugins/vuetify";
+import '@/controls/store';
+import '@/controls/router';
+import '@/controls/axios';
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  vuetify,
   render: h => h(App)
 }).$mount("#app");
