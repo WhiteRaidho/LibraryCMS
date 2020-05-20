@@ -5,17 +5,19 @@
       <Menu />
     </div>
     <div class="navbar-right">
-      <a href="/">       <!-- TODO: URL to User Account -->
+      <a href="/">
+        <!-- TODO: URL to User Account -->
         <img src="@/assets/svg_icons/Person.svg" class="image" />
       </a>
-      <a href="/">  <!-- TODO: URL to Borrowed Books -->
+      <a href="/">
+        <!-- TODO: URL to Borrowed Books -->
         <img src="@/assets/svg_icons/Bookmark.svg" class="image" />
       </a>
-      <a href="/About">  <!-- TODO: URL to Liked Books -->
+      <a href="/About">
+        <!-- TODO: URL to Liked Books -->
         <img src="@/assets/svg_icons/Heart.svg" class="image" />
       </a>
     </div>
-    
   </div>
 </template>
 
@@ -23,7 +25,7 @@
 import Menu from "./Menu.vue";
 
 export default {
-  name: 'Navbar',
+  name: "Navbar",
   components: {
     Menu
   }
@@ -64,7 +66,6 @@ export default {
     margin-right: 15px;
     width: 30px;
     height: 30px;
-    
   }
 
   .circle-border {

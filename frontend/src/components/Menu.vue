@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { Menu } from 'vue-burger-menu';
+import { Menu } from "vue-burger-menu";
 export default {
   components: {
     Menu
