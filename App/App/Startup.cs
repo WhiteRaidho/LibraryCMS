@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,7 @@ namespace App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<ApplicationDbContext>(opts =>
                 opts.UseSqlServer(@"Server=.\SQLEXPRESS;Database=LibraryCMS;User Id=Library;Password=Library;MultipleActiveResultSets=true;")
@@ -89,6 +91,19 @@ namespace App
                     //options.Authority = "https://dev-542381.okta.com/oauth2/default";
                     //options.Audience = "api://default";
                 });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowMyOrigin", builder => 
+                    builder.WithOrigins("http://localhost:8080")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                    );
+            });
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowMyOrigin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,6 +118,9 @@ namespace App
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+
+            app.UseCors("AllowMyOrigin");
 
             //app.UseHttpsRedirection();
             app.UseAuthentication(); //must to be above UseMvc()
