@@ -1,6 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./controls/router";
+import router from "@/controls/router";
 import store from "@/store";
 import "bootstrap";
 
@@ -8,6 +8,7 @@ import "bootstrap";
 import '@/controls/store';
 import '@/controls/router';
 import '@/controls/axios';
+import '@/controls/auth';
 
 Vue.config.productionTip = false;
 

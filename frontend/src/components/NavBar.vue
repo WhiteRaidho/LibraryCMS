@@ -31,9 +31,6 @@ export default {
 </script>
 
 <style lang="scss">
-:root {
-  --main-white-color: #f6f6f6;
-}
 .navbar {
   padding: 20px;
   padding-bottom: 5px;

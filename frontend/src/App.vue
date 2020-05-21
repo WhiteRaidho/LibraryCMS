@@ -17,6 +17,11 @@ export default {
 </script>
 
 <style lang="scss">
+:root {
+  --main-white-color: #f6f6f6;
+  --info-color: #1F7A8C;
+}
+
 body {
   margin: 0px;
   background-image: url("../src/assets/library_bg.jpg");
@@ -32,4 +37,6 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+@import './assets/styles/main.css';
 </style>
