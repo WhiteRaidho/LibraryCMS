@@ -5,15 +5,16 @@
       <Menu />
     </div>
     <div class="navbar-right">
-      <a href="/profile">       <!-- TODO: URL to User Account -->
+      <router-link to="/profile" class="router-link">       <!-- TODO: URL to User Account -->
         <img src="@/assets/svg_icons/Person.svg" class="image" />
-      </a>
-      <a href="/">  <!-- TODO: URL to Borrowed Books -->
+      </router-link>
+      <router-link to="/" class="router-link">  <!-- TODO: URL to Borrowed Books -->
         <img src="@/assets/svg_icons/Bookmark.svg" class="image" />
-      </a>
-      <a href="/About">  <!-- TODO: URL to Liked Books -->
+      </router-link>
+      <router-link to="/About" class="router-link">  <!-- TODO: URL to Liked Books -->
         <img src="@/assets/svg_icons/Heart.svg" class="image" />
-      </a>
+      </router-link>
+      <button class="button" v-on:click="this.$auth.logout()">Wyloguj</button>
     </div>
     
   </div>
@@ -43,7 +44,7 @@ export default {
   align-items: center;
   justify-content: space-around;
 
-  a {
+  .router-link {
     font-weight: bold;
     color: #2c3e50;
   }

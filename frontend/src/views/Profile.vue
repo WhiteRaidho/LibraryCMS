@@ -1,7 +1,7 @@
 <template>
   <div class="semi-transparent center-tab">
-    <div class="name">Witaj {{ firstName }} {{ lastName }}!</div>
-    <div class="mail">{{ email }}</div>
+    <div class="name">Witaj {{ user.firstName }} {{ user.lastName }}!</div>
+    <div class="mail">{{ user.email }}</div>
     <div class="last-actions container">
       <!-- <div> -->
       <span class="l-col">Przeczytane książki</span>
@@ -29,9 +29,9 @@ import AuthService, { AuthModel } from "@/services/AuthService";
   components: {}
 })
 export default class Profile extends Vue {
-  private firstName = "Imię";
-  private lastName = "Nazwisko";
-  private email = "mail@mail.com";
+  private firstName = "";
+  private lastName = "";
+  private email = "";
   private booksCount = 0;
   private avgRatings? = null;
   private lastRate? = null;
@@ -39,7 +39,6 @@ export default class Profile extends Vue {
 
   created() {
     this.loadData();
-    console.log("loading user");
   }
 
   async loadData() {

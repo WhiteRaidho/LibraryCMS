@@ -23,6 +23,9 @@ interface Auth {
 interface AuthRedirect {
   homePage: Location;
   loginPage: Location;
+  forbidden: Location;
+  notFound: Location;
+  changePassword: Location;
 }
 
 export class AuthOptions {
@@ -83,7 +86,6 @@ export class AuthHelper implements Auth {
       refresh: this.refreshToken,
       expires: ""
     };
-
     this.setTokens(tokens, tokens.refresh.length > 0);
   }
 
@@ -114,6 +116,33 @@ export class AuthHelper implements Auth {
         }
 
         this.store.commit("auth/setLoaded", true);
+      }
+
+      next();
+    });
+
+    this.router.beforeEach(async (to: Route, from: Route, next: any) => {
+      // eslint-disable-next-line
+      if (to.meta && to.meta.hasOwnProperty("auth")) {
+        const auth: any = to.meta.auth;
+
+        if (typeof auth === "boolean") {
+          if (auth === true && this.state.authenticated === false) {
+            next(this.options.routes.loginPage);
+            return;
+          }
+          if (auth === false && this.state.authenticated === true) {
+            next(this.options.routes.homePage);
+            return;
+          }
+        }
+
+        if (Array.isArray(auth) && auth.length > 0) {
+          if (this.state.authenticated === false) {
+            next(this.options.routes.loginPage);
+            return;
+          }
+        }
       }
 
       next();
@@ -266,7 +295,6 @@ export class AuthHelper implements Auth {
 
 export const AuthPlugin: PluginObject<AuthOptions> = {
   install(Vue, options) {
-    console.log(Vue.router);
     if (!Vue.axios) {
       throw new Error("Vue.axios must be set.");
     }
