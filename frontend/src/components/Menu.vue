@@ -4,6 +4,7 @@
     <Menu noOverlay>
       <router-link to="/">Stron główna</router-link>
       <router-link to="/books">Książki</router-link>
+      <router-link to="/libraries">Biblioteki</router-link>
     </Menu>
   </div>
 </template>
