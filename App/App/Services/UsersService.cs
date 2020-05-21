@@ -62,5 +62,10 @@ namespace App.Services
 
             return user.RefreshToken;
         }
+
+        public User GetUserByRefreshToken(string token)
+        {
+            return Context.Users.SingleOrDefault(x => x.RefreshToken == token);
+        }
     }
 }

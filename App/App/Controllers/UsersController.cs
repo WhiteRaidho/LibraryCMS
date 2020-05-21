@@ -86,6 +86,9 @@ namespace App.Controllers
 
         #region RefreshToken()
         [HttpGet("authenticate/refresh")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<TokenViewModel>> RefreshToken([FromHeader(Name = "Authorization")]string authorization)
         {
             if(!String.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
@@ -103,6 +106,25 @@ namespace App.Controllers
             }
             return BadRequest(new { message = "Bad authorization method" });
         }
+
+        [AllowAnonymous]
+        [HttpPost("authenticate/recover")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<TokenViewModel>> RecoverToken([FromBody]TokenRequestViewModel model)
+        {
+            if(!String.IsNullOrEmpty(model.Token))
+            {
+                var user = Users.GetUserByRefreshToken(model.Token);
+
+                if (user != null) return CreateToken(user);
+            }
+
+            return BadRequest(new { message = "Błędny token odświeżania" });
+        }
+
+
         #endregion
         //// GET: api/Users/5
         //[HttpGet("{id}")]
