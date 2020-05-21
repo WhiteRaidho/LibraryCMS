@@ -10,6 +10,10 @@ using App.Services;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using App.ViewModels;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace App.Controllers
 {
@@ -35,7 +39,7 @@ namespace App.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<UserViewModel>> GetMe()
         {
-            var me = Users.GetUser("admin"); // TODO Get user by id from auth
+            var me = Users.GetUser(User.Identity.Name); // TODO Get user by id from auth
             if (me == null) return NotFound();
 
             var result = Mapper.Map<UserViewModel>(me);
@@ -49,13 +53,57 @@ namespace App.Controllers
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
             var user = Users.Authenticate(model.Username, model.Password);
-
             if (user == null) return BadRequest(new { message = "Username or password is incorrect" });
-            var result = Mapper.Map<UserViewModel>(user);
-            return Ok(result);
+
+            var token = CreateToken(user);
+            return Ok(token);
+        }
+
+        private TokenViewModel CreateToken(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("fwiwdaaunykelhmeeegaoribyynrihotlwppcnimxvmevxbzmmesprmqogdtnwpbdzpajwgshkzmdlnarihjwhwqqjjhojoouaedbnwympcqpvfaumhgymexrcqkcfmgijrcyhjvbvumugdofutxvoggrejkoaiyzyspfhsfoysmcsyeyyhvlnrxswpbrqzozhmeatcavdhqhdfzgfbewnntgigxdkuahtpipswhiodarupccumlltsfibfbcher");
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.UserID.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            user.Token = tokenHandler.WriteToken(token);
+
+            return new TokenViewModel()
+            {
+                Token = user.Token,
+                Refresh = Users.GetRefreshToken(user),
+                Expires = token.ValidTo
+            };
         }
         #endregion
 
+        #region RefreshToken()
+        [HttpGet("authenticate/refresh")]
+        public async Task<ActionResult<TokenViewModel>> RefreshToken([FromHeader(Name = "Authorization")]string authorization)
+        {
+            if(!String.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
+            {
+                var jwtVal = authorization.Replace("Bearer ", String.Empty);
+                var jwt = new JwtSecurityTokenHandler().ReadToken(jwtVal) as JwtSecurityToken;
+
+                if(jwt != null)
+                {
+                    string userId = jwt.Claims.ToList()[0].Value;
+                    User user = Users.GetUser(userId);
+
+                    if (user != null) return CreateToken(user);
+                }
+            }
+            return BadRequest(new { message = "Bad authorization method" });
+        }
+        #endregion
         //// GET: api/Users/5
         //[HttpGet("{id}")]
         //public async Task<ActionResult<User>> GetUser(string id)

@@ -32,6 +32,7 @@ namespace App.Models
         public bool IsAdmin { get; set; }
 
         public string Token { get; set; }
+        public string RefreshToken { get; set; }
 
         public ICollection<Borrow> Borrows { get; set; }
 

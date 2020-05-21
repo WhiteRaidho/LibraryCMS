@@ -1,6 +1,7 @@
 ﻿using App.Models;
 using App.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,18 @@ namespace App.Services
 {
     public class UsersService : BaseService
     {
-        public UsersService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        IPasswordHasher<User> Hasher { get; }
+
+        public UsersService(
+            ApplicationDbContext context,
+            IMapper mapper,
+            IPasswordHasher<User> hasher
+            ) : base(context, mapper)
         {
+            Hasher = hasher;
         }
-        
+
+        #region GetUser()
         public User GetUser(string id)
         {
             var user = Context.Users.FirstOrDefault(u => u.UserID == id);
@@ -28,28 +37,30 @@ namespace App.Services
         {
             var user = await Context.Users.FindAsync(id);
             return user;
-        }
+        } 
+        #endregion
 
         public User Authenticate(string username, string password)
         {
             var user = Context.Users.SingleOrDefault(x => x.UserName == username && x.UserPassword == password);
             if (user == null) return null;
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("fwiwdaaunykelhmeeegaoribyynrihotlwppcnimxvmevxbzmmesprmqogdtnwpbdzpajwgshkzmdlnarihjwhwqqjjhojoouaedbnwympcqpvfaumhgymexrcqkcfmgijrcyhjvbvumugdofutxvoggrejkoaiyzyspfhsfoysmcsyeyyhvlnrxswpbrqzozhmeatcavdhqhdfzgfbewnntgigxdkuahtpipswhiodarupccumlltsfibfbcher");
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.UserID.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
-
             return user;
+        }
+
+        public string GetRefreshToken(User user)
+        {
+            if(String.IsNullOrEmpty(user.RefreshToken))
+            {
+                user.RefreshToken = Hasher.HashPassword(user, Guid.NewGuid().ToString())
+                    .Replace("+", string.Empty)
+                    .Replace("=", string.Empty)
+                    .Replace("/", string.Empty);
+
+                Update(user);
+            }
+
+            return user.RefreshToken;
         }
     }
 }
