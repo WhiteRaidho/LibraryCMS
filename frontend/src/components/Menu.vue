@@ -2,7 +2,8 @@
   <div>
     <!-- <div id="bg-overlay"></div> -->
     <Menu noOverlay>
-      <router-link to="/">Menu Biblioteka</router-link>
+      <router-link to="/">Stron główna</router-link>
+      <router-link to="/books">Książki</router-link>
     </Menu>
   </div>
 </template>

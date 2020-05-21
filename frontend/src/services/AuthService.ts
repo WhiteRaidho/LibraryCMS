@@ -8,16 +8,16 @@ export default class AuthService
      * 
      * @returns Promise<TokenModel>
      */
-    public static async login(username: string, password: string) : Promise<AuthModel>
+    public static async login(username: string, password: string) : Promise<TokenModel>
     {
-        return (await Vue.axios.post<AuthModel>('users/authenticate', {
+        return (await Vue.axios.post<TokenModel>('users/authenticate', {
             Username: username,
             Password: password
         })).data;
     }
 
     /**
-     * @returns Primise<TokenModel>
+     * @returns Promise<TokenModel>
      */
     public static async refreshToken() : Promise<TokenModel>
     {

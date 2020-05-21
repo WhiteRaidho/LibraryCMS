@@ -5,7 +5,7 @@
       <Menu />
     </div>
     <div class="navbar-right">
-      <a href="/">       <!-- TODO: URL to User Account -->
+      <a href="/profile">       <!-- TODO: URL to User Account -->
         <img src="@/assets/svg_icons/Person.svg" class="image" />
       </a>
       <a href="/">  <!-- TODO: URL to Borrowed Books -->
