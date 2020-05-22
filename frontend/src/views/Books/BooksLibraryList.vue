@@ -19,7 +19,6 @@ export default class BooksLibraryList extends Vue {
     { name: "Autor", fieldName: "authorFullName" }
   ];
   async created() {
-    console.log(this.$route.params.libraryId || 0);
     this.loadData();
   }
 
