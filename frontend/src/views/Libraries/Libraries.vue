@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import LibrariesService, { LibraryListItem } from '@/services/LibrariesService';
-import ContentTable from '@/components/ContentTable';
+import ContentTable from '@/components/ContentTable.vue';
 
 @Component({
   components: {
@@ -17,7 +17,7 @@ import ContentTable from '@/components/ContentTable';
 export default class Libraries extends Vue {
   private items: LibraryListItem[] = [];
 
-  private headers: any[]= [
+  private headers: any[] = [
     { name: "Nazwa Biblioteki", fieldName: "name" },
     { name: "Miejscowość", fieldName: "locationName" },
     { name: "Ulica", fieldName: "locationStreet" }
