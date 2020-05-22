@@ -14,7 +14,7 @@
       <router-link to="/About" class="router-link">  <!-- TODO: URL to Liked Books -->
         <img src="@/assets/svg_icons/Heart.svg" class="image" />
       </router-link>
-      <button class="button" v-on:click="this.$auth.logout()">Wyloguj</button>
+      <button class="button" v-on:click="logout()">Wyloguj</button>
     </div>
     
   </div>
@@ -22,11 +22,18 @@
 
 <script lang="ts">
 import Menu from "./Menu.vue";
+import { Vue, Component } from "vue-property-decorator";
 
-export default {
-  name: 'Navbar',
+@Component({
+  name: "Navbar",
   components: {
     Menu
+  }
+})
+export default class Navbar extends Vue{
+  async logout() {
+    await this.$auth.logout();
+    console.log("test");
   }
 };
 </script>
