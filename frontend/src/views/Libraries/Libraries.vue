@@ -23,7 +23,7 @@ export default class Libraries extends Vue {
     { name: "Ulica", fieldName: "locationStreet" }
   ];
 
-  created() {
+  async created() {
     this.loadData();
   }
 

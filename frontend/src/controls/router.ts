@@ -16,10 +16,16 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
+  //Ksiazki
   {
     path: "/books",
     name: "Books",
     component: () => import("../views/Books/Books.vue")
+  },
+  {
+    path: "/:libraryId/books",
+    name: "LibraryBooks",
+    component: () => import("../views/Books/BooksLibraryList.vue")
   },
   {
     path: "/profile",
@@ -31,6 +37,7 @@ const routes: Array<RouteConfig> = [
     name: "Login",
     component: () => import("../views/Login.vue")
   },
+  //Biblioteki
   {
     path: "/libraries",
     name: "Libraries",
