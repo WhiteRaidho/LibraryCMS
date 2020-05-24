@@ -20,20 +20,20 @@ namespace App.Services
             return book;
         }
 
-        public List<Book> GetBooks(string authorName)
+        public List<Book> GetBooks(string authorFullName)
         {
             var books = Context.Books
-                .Where(b => b.AuthorFullName == authorName)
+                .Where(b => b.AuthorFullName == authorFullName)
                 .GroupBy(b => new { b.Title, b.AuthorName, b.AuthorSurname })
                 .Select(g => g.First())
                 .ToList();
             return books;
         }
 
-        public Book GetBook(string authorName, string bookTitle)
+        public Book GetBook(string authorFullName, string bookTitle)
         {
             var book = Context.Books
-                .Where(b => b.AuthorFullName == authorName)
+                .Where(b => b.AuthorFullName == authorFullName)
                 .Where(b => b.Title == b.Title)
                 .FirstOrDefault();
             return book;

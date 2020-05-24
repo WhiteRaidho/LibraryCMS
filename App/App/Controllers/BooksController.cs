@@ -62,13 +62,13 @@ namespace App.Controllers
             return (ActionResult<IEnumerable<BookListItemViewModel>>)result;
         }
 
-        [HttpGet("books/{authorName}/{bookTitle}")]
+        [HttpGet("books/{authorFullName}/{bookTitle}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<BookViewModel>> GetBook(string authorName, string bookTitle)
+        public async Task<ActionResult<BookViewModel>> GetBook(string authorFullName, string bookTitle)
         {
-            var book = Books.GetBook(authorName, bookTitle);
+            var book = Books.GetBook(authorFullName, bookTitle);
             var result = Mapper.Map<BookViewModel>(book);
             return (ActionResult<BookViewModel>)result;
         }
