@@ -23,7 +23,7 @@ const routes: Array<RouteConfig> = [
     component: () => import("../views/Books/Books.vue")
   },
   {
-    path: "/:libraryId/books",
+    path: "/library/:libraryId/books",
     name: "LibraryBooks",
     component: () => import("../views/Books/BooksLibraryList.vue")
   },

@@ -10,7 +10,12 @@
     <tbody v-if="items.length > 0">
       <tr v-for="(item, index) in items" :key="index">
         <td v-for="(field, index) in headers" :key="index">
-          {{ item[field.fieldName] }}
+          <router-link :to="generateLink(field.link, item)" v-if="field.link">
+            {{ item[field.fieldName] }}
+          </router-link>
+          <span v-else>
+            {{ item[field.fieldName] }}
+          </span>
         </td>
       </tr>
     </tbody>
@@ -27,6 +32,16 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 export default class ContentTable extends Vue{
   @Prop() private items!: any[];
   @Prop() headers!: any[];
+
+  generateLink(link: string, item: any): string{
+    const toReplace = /[{]\w+[}]/g.exec(link);
+    if(!toReplace) return link;
+    toReplace.forEach(a => {
+      const field = a.replace("{", "").replace("}", "");
+      link = link.replace(a, item[field]);
+    });
+    return link;
+  }
 }
 </script>
 

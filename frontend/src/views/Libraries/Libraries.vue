@@ -18,7 +18,7 @@ export default class Libraries extends Vue {
   private items: LibraryListItem[] = [];
 
   private headers: any[] = [
-    { name: "Nazwa Biblioteki", fieldName: "name" },
+    { name: "Nazwa Biblioteki", fieldName: "name", link:"/library/{libraryID}/books" },
     { name: "Miejscowość", fieldName: "locationName" },
     { name: "Ulica", fieldName: "locationStreet" }
   ];
