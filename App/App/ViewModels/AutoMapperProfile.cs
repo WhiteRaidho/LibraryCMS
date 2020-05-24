@@ -18,6 +18,8 @@ namespace App.ViewModels
         protected void UserProfile()
         {
             CreateMap<User, UserViewModel>();
+            CreateMap<RegisterViewModel, User>()
+                .ForMember(d => d.UserPassword, o => o.MapFrom(s => s.Password));
         }
 
         protected void BookProfile()

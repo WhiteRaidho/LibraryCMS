@@ -32,13 +32,22 @@ namespace App.Services
             var user = Context.Users.FirstOrDefault(u => u.UserID == id);
             return user;
         }
-
+        
         public async Task<User> GetUserAsync(string id)
         {
             var user = await Context.Users.FindAsync(id);
             return user;
+        }
+        #endregion
+
+        #region GetUserByName()
+        public User GetUserByName(string username)
+        {
+            var user = Context.Users.FirstOrDefault(u => u.UserName == username);
+            return user;
         } 
         #endregion
+
 
         public User Authenticate(string username, string password)
         {

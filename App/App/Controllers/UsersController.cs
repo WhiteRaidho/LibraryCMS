@@ -123,8 +123,27 @@ namespace App.Controllers
 
             return BadRequest(new { message = "Błędny token odświeżania" });
         }
+        #endregion
 
+        #region Register()
+        [AllowAnonymous]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Register([FromBody]RegisterViewModel model)
+        {
+            var user = Users.GetUserByName(model.UserName);
+            if (user != null) return BadRequest(new { message = "Taki użytkownik już istnieje" });
 
+            User u = Mapper.Map<User>(model);
+                        
+            user = Users.Create(u);
+
+            if (user == null) return BadRequest(new { message = "Coś poszło nie tak" });
+
+            return Ok(user);
+        }
         #endregion
         //// GET: api/Users/5
         //[HttpGet("{id}")]
