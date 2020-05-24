@@ -1,4 +1,6 @@
-.button {
+.button,
+button,
+input[type=submit] {
     background-color: var(--main-white-color);
     border: solid 0px;
     border-radius: 4px;
@@ -11,7 +13,7 @@
 
 .semi-transparent {
   backdrop-filter: blur(10px);
-  background: #f6f6f620;
+  background: #f6f6f660;
 }
 
 .center-tab {
@@ -34,6 +36,10 @@
     flex-direction: row;
 }
 
+.p4 {
+    padding: 4px;
+}
+
 .p8 {
     padding: 8px;
 }
@@ -41,6 +47,19 @@
 .p16 {
     padding: 16px;
 }
+
+.m4 {
+    margin: 4px;
+}
+
+.m8 {
+    margin: 8px;
+}
+
+.m16 {
+    margin: 16px;
+}
+
 
 input[type=text],
 input[type=password] {
@@ -71,4 +90,24 @@ input[type=checkbox] {
     text-align: center;
     transform: translate(-50%, -50%);
     color: #262626;
+}
+
+.font-xs {
+    font-size: x-small;
+}
+
+.font-sm {
+    font-size: small;
+}
+
+.font-lg {
+    font-size: large;
+}
+
+.font-2x {
+    font-size: x-large;
+}
+
+.warning {
+    color: red;
 }

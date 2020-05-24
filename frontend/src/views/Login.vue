@@ -1,16 +1,17 @@
 <template>
   <div class="semi-transparent center-absolute-tab">
-    <div class="flex-container flex-column">
+    <div v-if="this.message" class="warning">{{ message }}</div>
+    <form @submit.prevent="onSubmit" class="flex-container flex-column">
         <div class="p8">
             <input v-model="username" placeholder="Login" type="text"/>
         </div>
         <div class="p8">
             <input v-model="password" placeholder="Hasło" type="password" />
         </div>
-        <button class="button login-button" v-on:click="login()">Zaloguj się</button>
+        <input type="submit" class="login-button" value="Zaloguj się" />
         <label><input type="checkbox" name="remember" id="remember">Zapamiętaj wybór (WIP)</label>
         <div class="p8">Jesteś nowym użytkownikiem? <router-link to="/register">Zarejestruj się</router-link></div> 
-    </div>
+  </form>
   </div>
 </template>
 
@@ -21,14 +22,21 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 @Component({
   components: {}
 })
-export default class Profile extends Vue {
+export default class Login extends Vue {
     private username = "";
     private password = "";
     private remember: boolean;
 
-    async login()
+    private message = "";
+
+    async onSubmit()
     {
+      try {
         await this.$auth.login(this.username, this.password, true);
+      } catch (ex) {
+        console.log(ex.message);
+        this.message = "Some error occures: " + ex.message;
+      }
     }
 }
 </script>

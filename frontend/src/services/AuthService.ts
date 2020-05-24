@@ -53,6 +53,11 @@ export default class AuthService
         return (await Vue.axios.get<AuthModel>('users/me')).data;
     }
 
+    public static async register(model: RegisterModel) : Promise<Statement>
+    {
+        return (await Vue.axios.post<Statement>('users', model)).data;
+    }
+
 }
 
 export interface TokenModel
@@ -76,4 +81,13 @@ export interface AuthModel
     firstName: string;
     lastName: string;
     token: string; //DELETE this
+}
+
+export interface RegisterModel
+{
+    username: string;
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
 }

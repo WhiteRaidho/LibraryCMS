@@ -18,7 +18,8 @@ Vue.axios.interceptors.response.use(
             code: 404,
             message: "Not found",
             data: null as any,
-            inner: null as any
+            inner: null as any,
+            errors: {}
         };
 
         if(error.response)
@@ -27,7 +28,14 @@ Vue.axios.interceptors.response.use(
             ex.data = (typeof error.response.data === "string")?{message: error.response.data}:error.response.data;
             ex.message = ex.data.message?ex.data.message:error.message;
             ex.inner = error;
+            ex.errors = ex.data.errors?ex.data.errors:error.message;
         }
+
+        if(ex.code == 400 && !ex.data.message)
+        {
+            ex.message = "Ups, coś poszło nie tak";
+        }
+        
 
         return Promise.reject(ex);
     }
