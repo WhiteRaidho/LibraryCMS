@@ -53,7 +53,7 @@ namespace App.Services
             var library = Find<Library>(LibraryID);
             var books = Context.Books
                 .Where(b => b.Library == library)
-                .GroupBy(b => new Book { Title = b.Title, AuthorName = b.AuthorName, AuthorSurname = b.AuthorSurname })
+                .GroupBy(b => new { b.Title, b.AuthorName, b.AuthorSurname })
                 .Select(g => g.First())
                 .ToList();
             return books;
