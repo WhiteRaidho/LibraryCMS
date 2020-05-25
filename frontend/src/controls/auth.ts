@@ -5,8 +5,8 @@ import store from '@/store';
 Vue.use(AuthPlugin, {
     store: store,
     routes: {
-        homePage: {path: '/'},
-        loginPage: {path: '/login'}
+        homePage: '/',
+        loginPage: '/login'
         //HACK add pages here if you want to route from Auth 
     }
 });

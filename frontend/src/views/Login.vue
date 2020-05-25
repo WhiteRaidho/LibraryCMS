@@ -9,7 +9,7 @@
             <input v-model="password" placeholder="Hasło" type="password" />
         </div>
         <input type="submit" class="login-button" value="Zaloguj się" />
-        <label><input type="checkbox" name="remember" id="remember">Zapamiętaj wybór (WIP)</label>
+        <label><input type="checkbox" name="remember" v-model="remember"/>Zapamiętaj wybór (WIP)</label>
         <div class="p8">Jesteś nowym użytkownikiem? <router-link to="/register">Zarejestruj się</router-link></div> 
   </form>
   </div>
@@ -25,17 +25,21 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 export default class Login extends Vue {
     private username = "";
     private password = "";
-    private remember: boolean;
+    private remember = false;
 
     private message = "";
 
     async onSubmit()
     {
       try {
-        await this.$auth.login(this.username, this.password, true);
+        let redirect = "";
+        if(this.$route.query.redirect)
+        {
+          redirect = this.$route.query.redirect.toString();
+        }
+        await this.$auth.login(this.username, this.password, this.remember, redirect);
       } catch (ex) {
-        console.log(ex.message);
-        this.message = "Some error occures: " + ex.message;
+        this.message = "Nie udało się zalgować na twoje konto.";
       }
     }
 }

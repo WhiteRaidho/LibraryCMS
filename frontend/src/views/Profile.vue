@@ -39,7 +39,6 @@ export default class Profile extends Vue {
     try {
       const response = await AuthService.getIdentity();
       this.user = response;
-      console.log(this.user);
     } catch (ex) {
       console.log(ex);
     }

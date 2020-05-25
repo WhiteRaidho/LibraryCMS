@@ -96,7 +96,6 @@ export default class Register extends Vue {
         } catch (ex) {
             this.err = ex.errors;
             this.message = ex.message;
-            console.log(this.err);
             this.$forceUpdate();
         }
     }

@@ -11,7 +11,7 @@ interface AuthState {
 }
 
 interface Auth {
-  login(username: string, password: string, rememberMe?: boolean): void;
+  login(username: string, password: string, rememberMe?: boolean, redirect?: string): void;
   logout(): void;
   token(): string;
   fetch(): void;
@@ -23,9 +23,6 @@ interface Auth {
 interface AuthRedirect {
   homePage: Location;
   loginPage: Location;
-  forbidden: Location;
-  notFound: Location;
-  changePassword: Location;
 }
 
 export class AuthOptions {
@@ -128,7 +125,10 @@ export class AuthHelper implements Auth {
 
         if (typeof auth === "boolean") {
           if (auth === true && this.state.authenticated === false) {
-            next(this.options.routes.loginPage);
+            next({
+              path: this.options.routes.loginPage,
+              query: { redirect: to.fullPath }
+            });
             return;
           }
           if (auth === false && this.state.authenticated === true) {
@@ -139,7 +139,7 @@ export class AuthHelper implements Auth {
 
         if (Array.isArray(auth) && auth.length > 0) {
           if (this.state.authenticated === false) {
-            next(this.options.routes.loginPage);
+            next({path: this.options.routes.loginPage, query: { redirect: to.fullPath }});
             return;
           }
         }
@@ -242,14 +242,18 @@ export class AuthHelper implements Auth {
   public async login(
     username: string,
     password: string,
-    rememberMe = false
+    rememberMe = false,
+    redirect = ""
   ): Promise<void> {
     try {
       const result = await AuthService.login(username, password);
       this.setTokens(result, rememberMe);
       await this.fetch();
-
-      this.router.push(this.options.routes.homePage);
+      if(redirect) {
+        this.router.push(redirect);
+      } else {
+        this.router.push(this.options.routes.homePage);
+      }
     } catch (ex) {
       this.logout();
       throw ex;

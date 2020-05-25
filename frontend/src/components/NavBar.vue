@@ -4,7 +4,7 @@
       <!-- <router-link to="/">Menu Biblioteka</router-link> -->
       <Menu />
     </div>
-    <div class="navbar-right">
+    <div class="navbar-right" v-if="this.$auth.check()">
       <router-link to="/profile" class="router-link">
         <img src="@/assets/svg_icons/Person.svg" class="image" /> 
         <!-- <ico icon="fa-user-circle"></ico> -->
@@ -16,12 +16,18 @@
         <img src="@/assets/svg_icons/Heart.svg" class="image" />
         <!-- <i class="far fa-heart"></i> -->
       </router-link>
+      <img src="@/assets/svg_icons/SignOut.svg" class="image" v-on:click="logout()"/>
       <!-- <router-link to="/About" class="router-link">
         <i class="fa fa-heart image"></i>
       </router-link> -->
       <!-- <button class="button" v-on:click="logout()">Wyloguj</button> -->
     </div>
-    
+    <div class="navbar-right" v-else>
+      <router-link to="/login" class="router-link">
+        <img src="@/assets/svg_icons/SignIn.svg" class="image" /> 
+        <!-- <ico icon="fa-user-circle image"></ico> -->
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -38,7 +44,6 @@ import { Vue, Component } from "vue-property-decorator";
 export default class Navbar extends Vue{
   async logout() {
     await this.$auth.logout();
-    console.log("test");
   }
 };
 </script>
@@ -74,7 +79,7 @@ export default class Navbar extends Vue{
     margin-right: 15px;
     width: 30px;
     height: 30px;
-    
+    cursor: pointer;
   }
 
   .circle-border {

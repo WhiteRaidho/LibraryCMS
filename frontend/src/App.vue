@@ -20,6 +20,7 @@ export default {
 :root {
   --main-white-color: #f6f6f6;
   --info-color: #1F7A8C;
+  --main-gray-color: #262626;
 }
 
 body {
