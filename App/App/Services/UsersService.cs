@@ -2,6 +2,7 @@
 using App.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,13 @@ namespace App.Services
             var user = Context.Users.FirstOrDefault(u => u.UserID == id);
             return user;
         }
-        
+
+        public User GetUserWithBorrows(string id)
+        {
+            var user = Context.Users.Include(x => x.Borrows).FirstOrDefault(u => u.UserID == id);
+            return user;
+        }
+
         public async Task<User> GetUserAsync(string id)
         {
             var user = await Context.Users.FindAsync(id);

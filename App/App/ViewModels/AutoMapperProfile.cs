@@ -14,6 +14,7 @@ namespace App.ViewModels
             UserProfile();
             BookProfile();
             LibraryProfile();
+            ReviewProfile();
         }
         protected void UserProfile()
         {
@@ -33,6 +34,28 @@ namespace App.ViewModels
             CreateMap<Library, LibraryListItemModel>()
                 .ForMember(d => d.LocationName, o => o.MapFrom(s => s.Location.Name))
                 .ForMember(d => d.LocationStreet, o => o.MapFrom(s => s.Location.Street));
+        }
+
+        protected void ReviewProfile()
+        {
+            CreateMap<Review, ReviewFormModel>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.ReviewId))
+                .ForMember(d => d.BookId, o => o.MapFrom(s => s.Book.BookId))
+                .ForMember(d => d.UserId, o => o.MapFrom(s => s.User.UserID))
+                .ReverseMap()
+                .ForMember(d => d.ReviewId, o=> o.Ignore());
+        }
+
+        protected void BorrowProfile()
+        {
+            CreateMap<Borrow, BorrowFormModel>()
+                .ForMember(d => d.UserId, o => o.MapFrom(s => s.User.UserID))
+                .ForMember(d => d.LibrarianUserId, o => o.MapFrom(s => s.Librarian.UserID))
+                .ForMember(d => d.ReturnLibrarianUserId, o => o.MapFrom(s => s.ReturnLibrarian.UserID))
+                .ForMember(d => d.BookId, o => o.MapFrom(s => s.Book.BookId))
+                .ForMember(d => d.Status, o => o.MapFrom(s => s.Status))
+                .ReverseMap()
+                .ForMember(d => d.BorrowId, o => o.Ignore());
         }
     }
 
