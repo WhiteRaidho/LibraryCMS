@@ -22,6 +22,7 @@ input[type=submit] {
   margin-bottom: 24px;
   padding: 32px;
   width: 50%;
+  border-radius: 8px;
 }
 
 .flex-container {
@@ -90,6 +91,7 @@ input[type=checkbox] {
     text-align: center;
     transform: translate(-50%, -50%);
     color: #262626;
+    border-radius: 8px;
 }
 
 .font-xs {

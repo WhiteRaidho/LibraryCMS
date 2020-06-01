@@ -31,14 +31,26 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 })
 export default class ContentTable extends Vue{
   @Prop() private items!: any[];
+  /*
+  example headers structure:
+  [{
+    name: "name", fieldName: "fieldName", link?: "/link/{from item[fieldName]}/[from query]"
+  }]
+  */
   @Prop() headers!: any[];
 
   generateLink(link: string, item: any): string{
-    const toReplace = /[{]\w+[}]/g.exec(link);
+    let toReplace = link.match(/[{]\w+[}]/g);
     if(!toReplace) return link;
     toReplace.forEach(a => {
       const field = a.replace("{", "").replace("}", "");
       link = link.replace(a, item[field]);
+    });
+    toReplace = link.match(/\[\w+\]/g);
+    if(!toReplace) return link;
+    toReplace.forEach(a => {
+      const query = a.replace("[", "").replace("]", "");
+      link = link.replace(a, String(this.$route.query[query]));
     });
     return link;
   }
