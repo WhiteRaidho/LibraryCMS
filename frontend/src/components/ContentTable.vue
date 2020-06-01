@@ -77,8 +77,4 @@ export default class ContentTable extends Vue{
 .content-table tbody tr:last-of-type {
   border-bottom: 2px solid var(--info-color);
 }
-.image {
-    width: 20px;
-    height: 20px;
-}
 </style>
