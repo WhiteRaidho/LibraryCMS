@@ -39,7 +39,7 @@ namespace App.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<UserViewModel>> GetMe()
         {
-            var me = Users.GetUser(User.Identity.Name); // TODO Get user by id from auth
+            var me = Users.GetUser(User.Identity.Name);
             if (me == null) return NotFound();
 
             var result = Mapper.Map<UserViewModel>(me);

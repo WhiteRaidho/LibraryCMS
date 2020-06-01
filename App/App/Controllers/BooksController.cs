@@ -27,40 +27,42 @@ namespace App.Controllers
             Books = booksService;
         }
 
-        // GET: api/Books
-        [HttpGet("books")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<BookListItemViewModel>>> GetBooks()
-        {
-            var books = Books.GetBooks();
-            var result = Mapper.Map<IEnumerable<BookListItemViewModel>>(books).ToList();
-            return (ActionResult<IEnumerable<BookListItemViewModel>>)result;
-        }
+        //// GET: api/Books
+        //[HttpGet("books")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesDefaultResponseType]
+        //public async Task<ActionResult<IEnumerable<BookListItemViewModel>>> GetBooks()
+        //{
+        //    var books = Books.GetBooks();
+        //    var result = Mapper.Map<IEnumerable<BookListItemViewModel>>(books).ToList();
+        //    return (ActionResult<IEnumerable<BookListItemViewModel>>)result;
+        //}
 
-        [HttpGet("{libraryId}/books")]
+        [HttpGet("books")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<BookListItemViewModel>>> GetBooks(int libraryId)
+        public async Task<ActionResult<IEnumerable<BookListItemViewModel>>> GetBooks([FromQuery]string search, [FromQuery]string author, [FromQuery] int? lib)
         {
-            var lib = Libraries.GetLibrary(libraryId);
-            if (lib == null) return NotFound();
+            if(lib != null && lib > 0) { 
+                var library = Libraries.GetLibrary((int)lib);
+                if (library == null) return NotFound();
+            }
 
-            var books = Books.GetBooks(libraryId);
+            var books = Books.GetBooks(search, author, lib);
             var result = Mapper.Map<IEnumerable<BookListItemViewModel>>(books).ToList();
             return (ActionResult<IEnumerable<BookListItemViewModel>>)result;
         }
 
-        [HttpGet("books/{authorName}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<BookListItemViewModel>>> GetBooks(string authorName)
-        {
-            var books = Books.GetBooks(authorName);
-            var result = Mapper.Map<IEnumerable<BookListItemViewModel>>(books).ToList();
-            return (ActionResult<IEnumerable<BookListItemViewModel>>)result;
-        }
+        //[HttpGet("books/{authorName}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesDefaultResponseType]
+        //public async Task<ActionResult<IEnumerable<BookListItemViewModel>>> GetBooks(string authorName)
+        //{
+        //    var books = Books.GetBooks(authorName);
+        //    var result = Mapper.Map<IEnumerable<BookListItemViewModel>>(books).ToList();
+        //    return (ActionResult<IEnumerable<BookListItemViewModel>>)result;
+        //}
 
         [HttpGet("books/{authorFullName}/{bookTitle}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

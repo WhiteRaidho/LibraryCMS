@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Permissions;
 using App.Extensions;
 using App.Models;
+using App.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -20,6 +22,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 namespace App
 {
@@ -35,7 +38,7 @@ namespace App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>(); //TODO FIX now
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<ApplicationDbContext>(opts =>
@@ -92,6 +95,20 @@ namespace App
                     };
                     //options.Authority = "https://dev-542381.okta.com/oauth2/default";
                     //options.Audience = "api://default";
+
+                    //options.Events = new JwtBearerEvents
+                    //{
+                    //    OnTokenValidated = async context =>
+                    //    {
+                    //        var provider = context.HttpContext.RequestServices;
+                    //        var user = provider.GetService<UsersService>().GetUser(context.Principal.Identity.Name);
+
+                    //        if(user.IsAdmin)
+                    //        {
+                    //            context.Principal.AddIdentity(;
+                    //        }
+                    //    }
+                    //};
                 });
 
             services.AddCors(options =>
