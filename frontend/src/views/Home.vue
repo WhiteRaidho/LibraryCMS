@@ -1,36 +1,45 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="semi-transparent center-absolute-tab home">
+    <div class="home-text">
+      Szukasz książki? Sprawdź czy jest dostępna u nas!
+    </div>
+    <!-- <form @submit.prevent="onSubmit" class="search-bar m8">
+      <input type="text" placeholder="Podaj tytuł książki lub autora..." v-model="search" />
+      <button type="submit"><i class="fas fa-search"></i></button>
+    </form> -->
+    <search-bar text="Podaj tytuł książki lub autora..." @submit="onSubmit"/>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import SearchBar from '@/components/SearchBar.vue';
 
-export default {
-  name: "Home",
+@Component({
   components: {
-    HelloWorld
+    SearchBar
+  }
+})
+export default class Home extends Vue{
+  private search = "";
+
+  onSubmit(search: string)
+  {
+    this.$router.push({path: "/books", query: {search: search, author: '', lib: ''}});
   }
 };
 </script>
 
 <style scoped>
-.books {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    padding: 16px;
-    text-align: center;
-    transform: translate(-50%, -50%);
-    color: #262626;
+.home {
+  min-height: 25%;
+  width: 70%;
 }
 
-.semi-transparent {
-    backdrop-filter: blur(10px);
-    background: #f6f6f620;
+.home-text {
+  font-size: 30px;
+  padding: 50px;
 }
+
+
 </style>
