@@ -38,6 +38,17 @@ namespace App.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("libraries/{id}")]
+        public async Task<ActionResult<LibraryListItemModel>> GetLibrary(int id)
+        {
+            var lib = Libraries.GetLibrary(id);
+
+            if (lib == null) return NotFound();
+
+            var result = Mapper.Map<LibraryListItemModel>(lib);
+            return Ok(result);
+        }
     }
 }
 
