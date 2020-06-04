@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,6 +63,14 @@ namespace App.Controllers
                 return NotFound();
 
             return Mapper.Map<ReviewFormModel>(entity);
+        }
+
+        [HttpGet("{authorFullName}/{bookTitle}")]
+        public async Task<ActionResult<IEnumerable<ReviewViewModel>>> GetReviewsForBook(string authorFullName, string bookTitle)
+        {
+            var list = Reviews.GetReviewsForBook(authorFullName, bookTitle);
+            var result = Mapper.Map<IEnumerable<ReviewViewModel>>(list);
+            return Ok(result);
         }
     }
 }

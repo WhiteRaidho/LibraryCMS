@@ -11,8 +11,11 @@ namespace App.Services
 {
     public class ReviewsService : BaseService
     {
-        public ReviewsService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        private BooksService Books { get; set; }
+
+        public ReviewsService(ApplicationDbContext context, IMapper mapper, BooksService books) : base(context, mapper)
         {
+            Books = books;
         }
 
         public Review GetReview(int id)
@@ -21,6 +24,16 @@ namespace App.Services
                 .FirstOrDefault(r => r.ReviewId == id);
 
             return entity;
+        }
+
+        public List<Review> GetReviewsForBook(string authorFullName, string bookTitle)
+        {
+            var result = Context.Reviews
+                .Include(r => r.Book)
+                .Include(r => r.User)
+                .Where(r => r.Book.Title == bookTitle && r.Book.AuthorFullName == authorFullName)
+                .ToList();
+            return result;
         }
     }
 }

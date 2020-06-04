@@ -40,6 +40,9 @@ namespace App.Controllers
         }
 
         [HttpGet("libraries/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<LibraryListItemModel>> GetLibrary(int id)
         {
             var lib = Libraries.GetLibrary(id);

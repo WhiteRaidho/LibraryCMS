@@ -44,6 +44,10 @@ namespace App.ViewModels
                 .ForMember(d => d.UserId, o => o.MapFrom(s => s.User.UserID))
                 .ReverseMap()
                 .ForMember(d => d.ReviewId, o=> o.Ignore());
+
+            CreateMap<Review, ReviewViewModel>()
+                .ForMember(d => d.UserName, o => o.MapFrom(s => s.User.UserName))
+                .ReverseMap();
         }
 
         protected void BorrowProfile()
