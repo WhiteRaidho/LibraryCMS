@@ -22,11 +22,11 @@ const routes: Array<RouteConfig> = [
     name: "Books",
     component: () => import("../views/Books/Books.vue")
   },
-  // {
-  //   path: "/books/library/:libraryId/books",
-  //   name: "Books",
-  //   component: () => import("../views/Books/BooksLibraryList.vue")
-  // },
+  {
+    path: "/books/:author/:title",
+    name: "Book",
+    component: () => import("../views/Books/Book.vue")
+  },
   {
     path: "/profile",
     name: "Profile",

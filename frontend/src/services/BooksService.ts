@@ -16,9 +16,20 @@ export default class BooksService{
             }
         })).data;
     }
+
+    public static async getBook(title: string, authorFullName: string) : Promise<BookViewModel>
+    {
+        return (await Vue.axios.get<BookViewModel>(`/books/${authorFullName}/${title}`)).data;
+    }
 }
 
 export interface BookListItemViewModel{
     title: string;
     authorFullName: string;
+}
+
+export interface BookViewModel {
+    title: string;
+    authorFullName: string;
+    description: string;
 }
