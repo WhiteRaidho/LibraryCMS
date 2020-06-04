@@ -117,6 +117,18 @@ input[type=checkbox] {
     font-size: x-large;
 }
 
+.font-4x {
+    font-size: xx-large;
+}
+
+.font-8x {
+    font-size: xxx-large;
+}
+
 .warning {
     color: red;
+}
+
+.none-decoration {
+    text-decoration: none;
 }
