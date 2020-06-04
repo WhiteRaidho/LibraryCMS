@@ -10,15 +10,22 @@
     <tbody v-if="items.length > 0">
       <tr v-for="(item, index) in items" :key="index">
         <td v-for="(field, index) in headers" :key="index">
-          <router-link :to="generateLink(field.link, item)" v-if="field.link">
+          <router-link :to="generateLink(field.link, item)" v-if="field.link" :class="field.styleClass">
             {{ item[field.fieldName] }}
           </router-link>
-          <span v-else>
+          <span v-else :class="field.styleClass">
             {{ item[field.fieldName] }}
           </span>
         </td>
       </tr>
     </tbody>
+    <tfoot v-else>
+      <tr>
+        <td :colspan="headers.length" class="font-lg">
+          Brak danych do wyświetlenia
+        </td>
+      </tr>
+    </tfoot>
   </table>
 </template>
 
@@ -34,7 +41,7 @@ export default class ContentTable extends Vue{
   /*
   example headers structure:
   [{
-    name: "name", fieldName: "fieldName", link?: "/link/{from item[fieldName]}/[from query]"
+    name: "name", fieldName: "fieldName", link?: "/link/{from item[fieldName]}/[from query], styleClass: "class another"
   }]
   */
   @Prop() headers!: any[];
@@ -91,5 +98,10 @@ export default class ContentTable extends Vue{
 }
 .content-table tbody tr:last-of-type {
   border-bottom: 2px solid var(--info-color);
+}
+
+.content-table tfoot td {
+  height: 32px;
+  text-align: center;
 }
 </style>

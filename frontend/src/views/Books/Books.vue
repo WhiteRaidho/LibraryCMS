@@ -46,12 +46,14 @@ export default class BooksLibraryList extends Vue {
     {
       name: "Tytuł książki",
       fieldName: "title",
-      link: "/books/{authorFullName}/{title}"
+      link: "/books/{authorFullName}/{title}",
+      styleClass: "none-decoration font-lg"
     },
     {
       name: "Autor",
       fieldName: "authorFullName",
-      link: "/books?search=[search]&author={authorFullName}&lib=[lib]"
+      link: "/books?search=[search]&author={authorFullName}&lib=[lib]",
+      styleClass: "none-decoration"
     }
   ];
   private libraryName = "";
@@ -97,7 +99,7 @@ export default class BooksLibraryList extends Vue {
     } catch (ex) {
       this.items = [];
     }
-    if(this.libraryId > 0){
+    if (this.libraryId > 0) {
       try {
         const response = await LibrariesService.getLibrary(this.libraryId);
         this.libraryName = response.name;
@@ -122,7 +124,7 @@ export default class BooksLibraryList extends Vue {
     let search = this.search;
     let author = this.author;
     let libraryId = this.libraryId;
-    switch(filter) {
+    switch (filter) {
       case "search":
         search = "";
         break;
