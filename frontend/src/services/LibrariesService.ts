@@ -5,6 +5,11 @@ export default class LibrariesService{
     {
         return (await Vue.axios.get<LibraryListItem[]>('libraries')).data;
     }
+
+    public static async getLibrary(id: number) : Promise<LibraryListItem>
+    {
+        return (await Vue.axios.get<LibraryListItem>(`libraries/${id}`)).data;
+    }
 }
 
 export interface LibraryListItem{

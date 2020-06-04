@@ -50,7 +50,9 @@ export default class ContentTable extends Vue{
     if(!toReplace) return link;
     toReplace.forEach(a => {
       const query = a.replace("[", "").replace("]", "");
-      link = link.replace(a, String(this.$route.query[query]));
+      let qu = this.$route.query[query];
+      if(typeof(qu) === 'undefined') qu = "";
+      link = link.replace(a, String(qu));
     });
     return link;
   }
@@ -63,7 +65,8 @@ export default class ContentTable extends Vue{
   margin: auto;
   margin-top: 20px;
   font-size: 0.9em;
-  min-width: 700px;
+  min-width: 300px;
+  width: 100%;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);

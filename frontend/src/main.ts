@@ -11,12 +11,13 @@ import '@/controls/axios';
 import '@/controls/auth';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 
 // library.add(faUserSecret) //HACK Method to add ico to project
 library.add(faSearch);
+library.add(faTimesCircle);
 Vue.component('ico', FontAwesomeIcon)
 dom.watch();
 

@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="onSubmit" class="search-bar m8">
+    <form @submit.prevent="onSubmit" class="search-bar">
       <input type="text" :placeholder="text" v-model="search" />
       <button type="submit"><i class="fas fa-search"></i></button>
     </form>
@@ -34,6 +34,7 @@ form.search-bar input[type=text] {
   border-bottom-right-radius: 0px;
   float: left;
   width: calc(100% - 50px);
+  outline: none;
 }
 
 form.search-bar button {
@@ -45,6 +46,7 @@ form.search-bar button {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   cursor: pointer;
+  outline: none;
 }
 
 form.search-bar::after {

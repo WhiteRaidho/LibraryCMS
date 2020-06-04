@@ -21,6 +21,7 @@ export default {
   --main-white-color: #f6f6f6;
   --info-color: #1F7A8C;
   --main-gray-color: #262626;
+  --main-light-gray-color: #3a3a3a;
 }
 
 body {
