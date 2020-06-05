@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace App.ViewModels
+﻿namespace App.ViewModels
 {
     public class LibraryListItemModel
     {

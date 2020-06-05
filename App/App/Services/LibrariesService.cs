@@ -1,10 +1,9 @@
 ﻿using App.Models;
+using App.ViewModels;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Services
 {
@@ -16,7 +15,8 @@ namespace App.Services
 
         public Library GetLibrary(int id)
         {
-            return Find<Library>(id);
+            var result = Context.Libraries.Include(x => x.Location).FirstOrDefault(y => y.LibraryId == id);
+            return result;
         }
 
         public IEnumerable<Library> GetList()
@@ -24,6 +24,16 @@ namespace App.Services
             var temp = Context.Libraries.Include(x => x.Location).ToList();
 
             return temp;
+        }
+
+        public Library Update(Library entity, LibraryFormModel model)
+        {
+            Mapper.Map(model, entity);
+
+            Update(entity);
+            SaveChanges();
+
+            return entity;
         }
     }
 }

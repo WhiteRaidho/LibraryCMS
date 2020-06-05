@@ -36,6 +36,10 @@ namespace App.ViewModels
             CreateMap<Library, LibraryListItemModel>()
                 .ForMember(d => d.LocationName, o => o.MapFrom(s => s.Location.Name))
                 .ForMember(d => d.LocationStreet, o => o.MapFrom(s => s.Location.Street));
+            CreateMap<Library, LibraryFormModel>()
+                .ForMember(d => d.LocationId, o => o.MapFrom(s => s.Location.LocationId))
+                .ReverseMap()
+                .ForMember(d => d.LibraryId, o => o.Ignore());
         }
 
         protected void ReviewProfile()
