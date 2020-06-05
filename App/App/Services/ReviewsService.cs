@@ -37,9 +37,11 @@ namespace App.Services
         {
             var rating = Context.Reviews
                 .Include(r => r.Book)
-                .Where(r => r.Book.Title == book.Title && r.Book.AuthorFullName == book.AuthorFullName)
-                .Average(r => (float)r.Rate);
-            return rating;
+                .Where(r => r.Book.Title == book.Title && r.Book.AuthorFullName == book.AuthorFullName);
+
+            if(rating.Count() > 0)
+                return rating.Average(r => (float)r.Rate);
+            return 0;
         }
 
         public bool IsReviewed(string authorFullName, string bookTitle, string userID)
@@ -50,9 +52,7 @@ namespace App.Services
                 .Where(r => r.User.UserID == userID && r.Book.AuthorFullName == authorFullName && r.Book.Title == bookTitle)
                 .FirstOrDefault();
 
-            if (entity == null)
-                return false;
-            else return true;
+            return !(entity == null);
         }
     }
 }

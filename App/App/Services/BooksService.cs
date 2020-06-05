@@ -63,25 +63,5 @@ namespace App.Services
                 .FirstOrDefault();
             return book;
         }
-
-        //public List<Book> GetBooks()
-        //{
-        //    var books = Context.Books
-        //        .GroupBy(b => new { b.Title, b.AuthorName, b.AuthorSurname})
-        //        .Select(g => g.First())
-        //        .ToList();
-        //    return books;
-        //}
-
-        //public List<Book> GetBooks(int LibraryID)
-        //{
-        //    var library = Find<Library>(LibraryID);
-        //    var books = Context.Books
-        //        .Where(b => b.Library == library)
-        //        .GroupBy(b => new { b.Title, b.AuthorName, b.AuthorSurname })
-        //        .Select(g => g.First())
-        //        .ToList();
-        //    return books;
-        //}
     }
 }

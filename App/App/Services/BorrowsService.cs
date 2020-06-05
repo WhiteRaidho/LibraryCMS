@@ -23,13 +23,14 @@ namespace App.Services
             return entity;
         }
 
-        public Borrow GetUserBorrows(string userId)
+        public bool IsBorrowed(string authorFullName, string bookTitle, string userId)
         {
             var entity = Context.Borrows
                 .Include(x => x.User)
-                .FirstOrDefault(x => x.User.UserID == userId);
+                .Include(x => x.Book)
+                .FirstOrDefault(x => x.User.UserID == userId && x.Book.Title == bookTitle && x.Book.AuthorFullName == authorFullName);
 
-            return entity;
+            return entity != null;
         }
     }
 }

@@ -18,13 +18,15 @@ namespace App.Controllers
         protected BooksService Books { get;  }
         protected ReviewsService Reviews { get; }
         protected UsersService Users { get; }
+        protected BorrowsService Borrows { get; }
         protected IMapper Mapper { get; }
 
-        public ReviewsController(ReviewsService reviewsService, IMapper mapper, BooksService booksService, UsersService usersService)
+        public ReviewsController(ReviewsService reviewsService, IMapper mapper, BooksService booksService, UsersService usersService, BorrowsService borrowsService)
         {
             Users = usersService;
             Books = booksService;
             Reviews = reviewsService;
+            Borrows = borrowsService;
             Mapper = mapper;
         }
 
@@ -76,6 +78,15 @@ namespace App.Controllers
             var list = Reviews.GetReviewsForBook(authorFullName, bookTitle);
             var result = Mapper.Map<IEnumerable<ReviewViewModel>>(list);
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet("{authorFullName}/{bookTitle}/check")]
+        public async Task<ActionResult<bool>> CanWriteReview(string authorFullName, string bookTitle)
+        {
+            var borrow = Borrows.IsBorrowed(authorFullName, bookTitle, User.Identity.Name);
+            var review = Reviews.IsReviewed(authorFullName, bookTitle, User.Identity.Name);
+            return borrow && !review;
         }
     }
 }

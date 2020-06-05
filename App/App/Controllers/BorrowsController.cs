@@ -38,19 +38,5 @@ namespace App.Controllers
 
             return Mapper.Map<BorrowFormModel>(entity);
         }
-
-        //[HttpPost]
-        //[ProducesResponseType(StatusCodes.Status201Created)]
-        //[ProducesDefaultResponseType]
-        //public async Task<ActionResult> Create([FromBody] BorrowFormModel model)
-        //{
-        //    var entity = Mapper.Map<Borrow>(model);
-        //    entity.User = Users.GetUser(model.UserId);
-        //    entity.Librarian = Users.
-
-        //    Borrows.create(entity);
-
-        //    return CreatedAtAction(nameof(Fetch), new { id = entity.BorrowId }, Mapper.Map<ReviewFormModel>(entity));
-        //}
     }
 }
