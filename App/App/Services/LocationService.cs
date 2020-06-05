@@ -1,16 +1,12 @@
 ﻿using App.Models;
 using App.ViewModels;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Services
 {
     public class LocationService : BaseService
     {
-        public LocationService(ApplicationDbContext context, IMapper mapper):base(context, mapper)
+        public LocationService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
