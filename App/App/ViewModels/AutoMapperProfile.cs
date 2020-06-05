@@ -86,6 +86,18 @@ namespace App.ViewModels
                 .ForMember(d => d.LocationId, o => o.Ignore());
         }
         #endregion
+
+        #region RoleProfile
+        protected void RoleProfile()
+        {
+            CreateMap<Role, RoleFormModel>()
+                .ForMember(d => d.LibraryId, o => o.MapFrom(s => s.Library.LibraryId))
+                .ForMember(d => d.UserId, o => o.MapFrom(s => s.User.UserID))
+                .ForMember(d => d.UserRole, o => o.MapFrom(s => s.UserRole))
+                .ReverseMap()
+                .ForMember(d => d.RoleId, o => o.Ignore());
+        }
+        #endregion
     }
 
 
