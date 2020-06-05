@@ -14,7 +14,7 @@ namespace App.ViewModels
         [RegularExpression(@"\d{2}-\d{3}", ErrorMessage = "Zła składnia kodu pocztowego")]
         public string ZipCode { get; set; }
 
-        [MaxLength(64, ErrorMessage = "NAzwa ulicy może zawierać do 64 znaków")]
+        [MaxLength(64, ErrorMessage = "Nazwa ulicy może zawierać do 64 znaków")]
         public string Street { get; set; }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using App.Models;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.ViewModels
 {
@@ -51,7 +47,7 @@ namespace App.ViewModels
             CreateMap<Review, ReviewFormModel>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.ReviewId))
                 .ReverseMap()
-                .ForMember(d => d.ReviewId, o=> o.Ignore());
+                .ForMember(d => d.ReviewId, o => o.Ignore());
 
             CreateMap<Review, ReviewViewModel>()
                 .ForMember(d => d.UserName, o => o.MapFrom(s => s.User.UserName))
@@ -79,5 +75,5 @@ namespace App.ViewModels
         }
     }
 
-    
+
 }
