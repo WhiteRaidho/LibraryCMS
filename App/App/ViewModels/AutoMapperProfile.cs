@@ -41,8 +41,6 @@ namespace App.ViewModels
         {
             CreateMap<Review, ReviewFormModel>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.ReviewId))
-                .ForMember(d => d.BookId, o => o.MapFrom(s => s.Book.BookId))
-                .ForMember(d => d.UserId, o => o.MapFrom(s => s.User.UserID))
                 .ReverseMap()
                 .ForMember(d => d.ReviewId, o=> o.Ignore());
 

@@ -1,11 +1,8 @@
 ﻿using App.Models;
-using App.ViewModels;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Services
 {
@@ -43,6 +40,19 @@ namespace App.Services
                 .Where(r => r.Book.Title == book.Title && r.Book.AuthorFullName == book.AuthorFullName)
                 .Average(r => (float)r.Rate);
             return rating;
+        }
+
+        public bool IsReviewed(string authorFullName, string bookTitle, string userID)
+        {
+            var entity = Context.Reviews
+                .Include(b => b.Book)
+                .Include(u => u.User)
+                .Where(r => r.User.UserID == userID && r.Book.AuthorFullName == authorFullName && r.Book.Title == bookTitle)
+                .FirstOrDefault();
+
+            if (entity == null)
+                return false;
+            else return true;
         }
     }
 }

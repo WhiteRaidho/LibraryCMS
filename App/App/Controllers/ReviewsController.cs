@@ -11,14 +11,13 @@ using System.Threading.Tasks;
 
 namespace App.Controllers
 {
-    //[Authorize]
     [ApiController]
     [Route("api/reviews")]
     public class ReviewsController : ControllerBase
     {
         protected BooksService Books { get;  }
-        protected UsersService Users { get; }
         protected ReviewsService Reviews { get; }
+        protected UsersService Users { get; }
         protected IMapper Mapper { get; }
 
         public ReviewsController(ReviewsService reviewsService, IMapper mapper, BooksService booksService, UsersService usersService)
@@ -29,21 +28,27 @@ namespace App.Controllers
             Mapper = mapper;
         }
 
-        [HttpPost]
+        [Authorize]
+        [HttpPost("{authorFullName}/{bookTitle}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Create([FromBody] ReviewFormModel model)
+        public async Task<ActionResult> Create([FromBody] ReviewFormModel model, string authorFullName, string bookTitle)
         {
             var entity = Mapper.Map<Review>(model);
-            
-            entity.User = Users.GetUserWithBorrows(model.UserId);
-            entity.Book = Books.GetBook(model.BookId);
+            var reviews = Reviews.GetReviewsForBook(authorFullName, bookTitle);
 
-            var isBorrowed = entity.User.Borrows.FirstOrDefault(b => b.Book.BookId == model.BookId);
+            entity.User = Users.GetUserWithBorrows(User.Identity.Name);
+            entity.Book = Books.GetBook(authorFullName, bookTitle);
+
+            var isBorrowed = entity.User.Borrows.FirstOrDefault(b => b.Book.BookId == entity.Book.BookId);
 
             if (isBorrowed == null)
                 return Forbid();
+
+            if (Reviews.IsReviewed(entity.Book.AuthorFullName, entity.Book.Title, entity.User.UserID))
+                return Conflict();
 
             Reviews.Create(entity);
 
