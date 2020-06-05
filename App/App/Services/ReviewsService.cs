@@ -35,5 +35,14 @@ namespace App.Services
                 .ToList();
             return result;
         }
+
+        public float GetRatingForBook(Book book)
+        {
+            var rating = Context.Reviews
+                .Include(r => r.Book)
+                .Where(r => r.Book.Title == book.Title && r.Book.AuthorFullName == book.AuthorFullName)
+                .Average(r => (float)r.Rate);
+            return rating;
+        }
     }
 }

@@ -26,7 +26,8 @@ namespace App.ViewModels
         protected void BookProfile()
         {
             CreateMap<Book, BookListItemViewModel>();
-            CreateMap<Book, BookViewModel>();
+            CreateMap<Book, BookViewModel>()
+                .ForMember(d => d.AvgRating, o => o.Ignore());
         }
 
         protected void LibraryProfile()

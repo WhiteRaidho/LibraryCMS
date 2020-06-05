@@ -142,7 +142,7 @@ namespace App.Controllers
 
             if (user == null) return BadRequest(new { message = "Coś poszło nie tak" });
 
-            return Ok(user);
+            return Ok();
         }
         #endregion
         //// GET: api/Users/5

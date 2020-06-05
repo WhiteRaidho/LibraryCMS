@@ -19,12 +19,14 @@ namespace App.Controllers
         protected IMapper Mapper { get; }
         protected LibrariesService Libraries { get; }
         protected BooksService Books { get; }
+        protected ReviewsService Reviews { get; }
 
-        public BooksController(IMapper mapper, LibrariesService librariesService, BooksService booksService)
+        public BooksController(IMapper mapper, LibrariesService librariesService, BooksService booksService, ReviewsService reviewsService)
         {
             Mapper = mapper;
             Libraries = librariesService;
             Books = booksService;
+            Reviews = reviewsService;
         }
 
         //// GET: api/Books
@@ -71,7 +73,9 @@ namespace App.Controllers
         public async Task<ActionResult<BookViewModel>> GetBook(string authorFullName, string bookTitle)
         {
             var book = Books.GetBook(authorFullName, bookTitle);
+            if (book == null) return NotFound();
             var result = Mapper.Map<BookViewModel>(book);
+            result.AvgRating = Reviews.GetRatingForBook(book);
             return (ActionResult<BookViewModel>)result;
         }
         
