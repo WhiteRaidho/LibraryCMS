@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Services
 {
@@ -18,7 +17,9 @@ namespace App.Services
 
         public Book GetBook(int id)
         {
-            var book = Find<Book>(id);
+            var book = Context.Books
+                .Include(x => x.Library)
+                .FirstOrDefault(y => y.BookId == id);
             return book;
         }
 
@@ -26,7 +27,7 @@ namespace App.Services
         {
             var predicate = PredicateBuilder.New<Book>(true);
 
-            if(!String.IsNullOrEmpty(search))
+            if (!String.IsNullOrEmpty(search))
             {
                 var splited = search.Split(' ');
                 foreach (string str in splited)
@@ -35,12 +36,12 @@ namespace App.Services
                     predicate.Or(p => p.AuthorFullName.ToLower().Contains(str.ToLower()));
                 }
             }
-            if(!String.IsNullOrEmpty(authorFullName))
+            if (!String.IsNullOrEmpty(authorFullName))
             {
                 predicate.And(p => p.AuthorFullName.ToLower().Contains(authorFullName.ToLower()));
             }
 
-            if(lib != null && lib > 0)
+            if (lib != null && lib > 0)
             {
                 predicate.And(p => p.Library.LibraryId == lib);
             }
@@ -62,6 +63,16 @@ namespace App.Services
                 .Where(b => b.Title == b.Title)
                 .FirstOrDefault();
             return book;
+        }
+
+        public Book Update(Book entity, BookFormModel model)
+        {
+            Mapper.Map(model, entity);
+
+            Update(entity);
+            SaveChanges();
+
+            return entity;
         }
     }
 }

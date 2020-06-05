@@ -29,6 +29,10 @@ namespace App.ViewModels
             CreateMap<Book, BookListItemViewModel>();
             CreateMap<Book, BookViewModel>()
                 .ForMember(d => d.AvgRating, o => o.Ignore());
+            CreateMap<Book, BookFormModel>()
+                .ForMember(d => d.LibraryId, o => o.MapFrom(s => s.Library.LibraryId))
+                .ReverseMap()
+                .ForMember(d => d.BookId, o => o.Ignore());
         }
 
         protected void LibraryProfile()
