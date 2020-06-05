@@ -12,14 +12,18 @@ namespace App.ViewModels
             LibraryProfile();
             ReviewProfile();
             LocationProfile();
+            RoleProfile();
         }
+        #region UserProfile
         protected void UserProfile()
         {
             CreateMap<User, UserViewModel>();
             CreateMap<RegisterViewModel, User>()
                 .ForMember(d => d.UserPassword, o => o.MapFrom(s => s.Password));
         }
+        #endregion
 
+        #region BookProfile
         protected void BookProfile()
         {
             CreateMap<Book, BookListItemViewModel>();
@@ -30,7 +34,9 @@ namespace App.ViewModels
                 .ReverseMap()
                 .ForMember(d => d.BookId, o => o.Ignore());
         }
+        #endregion
 
+        #region LibraryProfile
         protected void LibraryProfile()
         {
             CreateMap<Library, LibraryListItemModel>()
@@ -41,7 +47,9 @@ namespace App.ViewModels
                 .ReverseMap()
                 .ForMember(d => d.LibraryId, o => o.Ignore());
         }
+        #endregion
 
+        #region ReviewProfile
         protected void ReviewProfile()
         {
             CreateMap<Review, ReviewFormModel>()
@@ -53,7 +61,9 @@ namespace App.ViewModels
                 .ForMember(d => d.UserName, o => o.MapFrom(s => s.User.UserName))
                 .ReverseMap();
         }
+        #endregion
 
+        #region BorrowProfile
         protected void BorrowProfile()
         {
             CreateMap<Borrow, BorrowFormModel>()
@@ -65,7 +75,9 @@ namespace App.ViewModels
                 .ReverseMap()
                 .ForMember(d => d.BorrowId, o => o.Ignore());
         }
+        #endregion
 
+        #region LocationProfile
         protected void LocationProfile()
         {
             CreateMap<Location, LocationViewModel>();
@@ -73,6 +85,7 @@ namespace App.ViewModels
                 .ReverseMap()
                 .ForMember(d => d.LocationId, o => o.Ignore());
         }
+        #endregion
     }
 
 
