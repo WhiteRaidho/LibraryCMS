@@ -15,6 +15,7 @@ namespace App.ViewModels
             BookProfile();
             LibraryProfile();
             ReviewProfile();
+            LocationProfile();
         }
         protected void UserProfile()
         {
@@ -59,6 +60,14 @@ namespace App.ViewModels
                 .ForMember(d => d.Status, o => o.MapFrom(s => s.Status))
                 .ReverseMap()
                 .ForMember(d => d.BorrowId, o => o.Ignore());
+        }
+
+        protected void LocationProfile()
+        {
+            CreateMap<Location, LocationViewModel>();
+            CreateMap<Location, LocationFormModel>()
+                .ReverseMap()
+                .ForMember(d => d.LocationId, o => o.Ignore());
         }
     }
 
