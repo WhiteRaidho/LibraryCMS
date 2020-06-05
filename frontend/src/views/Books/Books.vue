@@ -149,17 +149,17 @@ export default class BooksLibraryList extends Vue {
 
 <style scoped>
 .books {
-  width: 70%;
+  min-width: 70%;
 }
 
-.filters {
-}
+/* .filters {
+} */
 
 .filter {
   margin-top: 8px;
   margin-right: 8px;
   padding: 4px 8px;
-  border-radius: 300px;
+  border-radius: 24px;
   text-align: left;
   background-color: var(--info-color);
   color: var(--main-white-color);

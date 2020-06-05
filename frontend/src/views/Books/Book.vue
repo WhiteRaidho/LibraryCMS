@@ -1,23 +1,25 @@
 <template>
   <div>
-    <div class="center-tab semi-transparent flex-container flex-wrap">
-      <div class="left">
-        <img src="@/assets/book_cover.jpg" />
-      </div>
-      <div class="right">
-        <div class="font-8x">{{ book.title }}</div>
-        <router-link
-          class="author"
-          :to="{path: '/books', query: {author: book.authorFullName, search: '', lib: ''}}"
-        >{{ book.authorFullName }}</router-link>
-        <div class="description">{{ book.description }}</div>
+    <div class="center-tab semi-transparent">
+      <div class="flex-container flex-wrap container">
+        <div class="left">
+          <img src="@/assets/book_cover.jpg" />
+        </div>
+        <div class="right">
+          <div class="font-8x">{{ book.title }}</div>
+          <router-link
+            class="author"
+            :to="{path: '/books', query: {author: book.authorFullName, search: '', lib: ''}}"
+          >{{ book.authorFullName }}</router-link>
+          <div class="description">{{ book.description }}</div>
+        </div>
       </div>
     </div>
     <div class="semi-transparent center-tab books">
-      <div class="font-4x">Recenzje
-        <!-- <stars :changeable='true' :rate='rate' @changeRating="changeRating" class="font-8x" :key="rate"/> -->
+      <div class="font-4x">
+        Recenzje
       </div>
-      <content-table :items="reviews" :headers="headers" />
+      <review v-for="(item, index) in reviews" :key="index" :model="item" />
     </div>
   </div>
 </template>
@@ -27,17 +29,15 @@ import { Component, Vue } from "vue-property-decorator";
 import BooksService, { BookViewModel } from "@/services/BooksService";
 import ReviewsService, { ReviewViewModel } from "@/services/ReviewsService";
 import ContentTable from "@/components/ContentTable.vue";
-import Stars from "@/components/Reviews/Stars.vue"
+import Review from "@/components/Reviews/Review.vue";
 
 @Component({
   components: {
     ContentTable,
-    Stars
+    Review
   }
 })
 export default class Book extends Vue {
-
-  private rate = 2;
 
   private book: BookViewModel = {
     title: "",
@@ -45,23 +45,7 @@ export default class Book extends Vue {
     description: ""
   };
 
-  private headers: any[] = [
-    {
-      name: "Autor",
-      fieldName: "userName"
-    },
-    {
-      name: "Ocena",
-      fieldName: "rate"
-    },
-    {
-      name: "Opis",
-      fieldName: "description"
-    }
-  ];
-
   private reviews: ReviewViewModel[] = [];
-
 
   private get bookId(): number {
     return Number(this.$route.params.bookId || 0);
@@ -93,22 +77,24 @@ export default class Book extends Vue {
     }
     // Load reviews for Book
     try {
-      const response = await ReviewsService.getReviewsForBook(this.title, this.author);
+      const response = await ReviewsService.getReviewsForBook(
+        this.title,
+        this.author
+      );
       this.reviews = response;
     } catch (ex) {
       this.reviews = [];
     }
   }
-
-  changeRating(rate: number) {
-    this.rate = rate;
-    console.log(this.rate);
-  }
-
 }
 </script>
 
 <style scoped>
+.container {
+  justify-content: space-evenly;
+  margin: auto;
+}
+
 .right {
   float: right;
   text-align: left;
@@ -117,14 +103,13 @@ export default class Book extends Vue {
 .left {
   float: left;
   padding-right: 16px;
-  margin: auto;
+  /* margin: auto; */
 }
 
 .left > img {
   width: 100%;
   max-width: 300px;
 }
-
 
 .author {
   font-size: 20px;

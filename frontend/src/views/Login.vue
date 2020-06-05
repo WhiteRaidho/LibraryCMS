@@ -8,7 +8,9 @@
         <div class="p8">
             <input v-model="password" placeholder="Hasło" type="password" />
         </div>
-        <input type="submit" class="login-button" value="Zaloguj się" />
+        <div>
+          <input type="submit" class="login-button" value="Zaloguj się" />
+        </div>
         <label><input type="checkbox" name="remember" v-model="remember"/>Zapamiętaj wybór (WIP)</label>
         <div class="p8">Jesteś nowym użytkownikiem? <router-link to="/register">Zarejestruj się</router-link></div> 
   </form>

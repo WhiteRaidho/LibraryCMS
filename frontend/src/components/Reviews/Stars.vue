@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="star-container">
         <span v-for="(index) in 5" :key="index" v-on:click="change(index)">
             <i :class="['fas', 'fa-star', {'star': changeable}, {'checked': (index <= rate)}]"></i>
         </span>
@@ -35,7 +35,7 @@ export default class Stars extends Vue {
     cursor: pointer;
 }
 
-.container {
+.star-container {
     display: inline-block;
     white-space: nowrap;
 }
