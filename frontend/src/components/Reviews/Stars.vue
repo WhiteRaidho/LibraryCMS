@@ -1,7 +1,7 @@
 <template>
-    <div class="star-container">
+    <div class="star-container" :class="{'star-background': !noBackground}">
         <span v-for="(index) in 5" :key="index" v-on:click="change(index)">
-            <i :class="['fas', 'fa-star', {'star': changeable}, {'checked': (index <= Math.round(rate))}]"></i>
+            <i :class="['fas', 'fa-star', {'star': changeable}, {'star-checked': (index <= Math.round(rate))}]"></i>
         </span>
     </div>
 </template>
@@ -17,6 +17,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 export default class Stars extends Vue {
     @Prop() rate!: number;
     @Prop() changeable!: boolean;
+    @Prop() noBackground: boolean;
 
     change(i: number) {
         if(this.changeable)
@@ -26,7 +27,7 @@ export default class Stars extends Vue {
 </script>
 
 <style scoped>
-.checked {
+.star-checked {
     color: orange;
 }
 
@@ -36,8 +37,14 @@ export default class Stars extends Vue {
 }
 
 .star-container {
+    padding:2px 6px;
+    border-radius: 30px;
     display: inline-block;
     white-space: nowrap;
+}
+
+.star-background {
+    background-color: var(--main-dark-white-color);
 }
 
 </style>

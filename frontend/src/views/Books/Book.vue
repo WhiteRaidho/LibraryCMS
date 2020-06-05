@@ -23,6 +23,11 @@
       <div class="font-4x">
         Recenzje
       </div>
+      <div class="p8" v-if="canWriteReview">
+        <form name="review">
+          <input type="text" placeholder="Opinia"/>
+        </form>
+      </div>
       <review v-for="(item, index) in reviews" :key="index" :model="item" />
     </div>
   </div>
@@ -53,6 +58,7 @@ export default class Book extends Vue {
   };
 
   private reviews: ReviewViewModel[] = [];
+  private canWriteReview = false;
 
   private get bookId(): number {
     return Number(this.$route.params.bookId || 0);
@@ -75,7 +81,6 @@ export default class Book extends Vue {
     try {
       const response = await BooksService.getBook(this.title, this.author);
       this.book = response;
-      console.log(this.book.avgRating);
     } catch (ex) {
       this.book = {
         title: "Not found",
@@ -93,6 +98,15 @@ export default class Book extends Vue {
       this.reviews = response;
     } catch (ex) {
       this.reviews = [];
+    }
+    // Check if can write review
+    if(this.$auth.check()) {
+      try {
+        const response = await ReviewsService.canWriteReview(this.title, this.author);
+        this.canWriteReview = response;
+      } catch (ex) {
+        this.canWriteReview = false;
+      }
     }
   }
 }
@@ -128,6 +142,7 @@ export default class Book extends Vue {
 
 .description {
   padding-top: 32px;
+  text-align: justify;
 }
 
 .rating {
