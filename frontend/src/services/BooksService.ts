@@ -32,4 +32,5 @@ export interface BookViewModel {
     title: string;
     authorFullName: string;
     description: string;
+    avgRating: number;
 }

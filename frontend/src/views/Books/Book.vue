@@ -11,6 +11,10 @@
             class="author"
             :to="{path: '/books', query: {author: book.authorFullName, search: '', lib: ''}}"
           >{{ book.authorFullName }}</router-link>
+          <div>
+            <stars :changeable="false" :rate="book.avgRating" :key="book.avgRating" />
+            <span class="rating">{{ book.avgRating.toFixed(1) }}/5</span>
+            </div>
           <div class="description">{{ book.description }}</div>
         </div>
       </div>
@@ -30,11 +34,13 @@ import BooksService, { BookViewModel } from "@/services/BooksService";
 import ReviewsService, { ReviewViewModel } from "@/services/ReviewsService";
 import ContentTable from "@/components/ContentTable.vue";
 import Review from "@/components/Reviews/Review.vue";
+import Stars from "@/components/Reviews/Stars.vue";
 
 @Component({
   components: {
     ContentTable,
-    Review
+    Review,
+    Stars
   }
 })
 export default class Book extends Vue {
@@ -42,7 +48,8 @@ export default class Book extends Vue {
   private book: BookViewModel = {
     title: "",
     authorFullName: "",
-    description: ""
+    description: "",
+    avgRating: 0  
   };
 
   private reviews: ReviewViewModel[] = [];
@@ -68,11 +75,13 @@ export default class Book extends Vue {
     try {
       const response = await BooksService.getBook(this.title, this.author);
       this.book = response;
+      console.log(this.book.avgRating);
     } catch (ex) {
       this.book = {
         title: "Not found",
         authorFullName: "Not Found",
-        description: ""
+        description: "",
+        avgRating: 0
       };
     }
     // Load reviews for Book
@@ -119,5 +128,10 @@ export default class Book extends Vue {
 
 .description {
   padding-top: 32px;
+}
+
+.rating {
+  padding-left: 8px;
+  font-weight: bold;
 }
 </style>

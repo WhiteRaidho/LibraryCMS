@@ -1,7 +1,7 @@
 <template>
     <div class="star-container">
         <span v-for="(index) in 5" :key="index" v-on:click="change(index)">
-            <i :class="['fas', 'fa-star', {'star': changeable}, {'checked': (index <= rate)}]"></i>
+            <i :class="['fas', 'fa-star', {'star': changeable}, {'checked': (index <= Math.round(rate))}]"></i>
         </span>
     </div>
 </template>
