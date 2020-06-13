@@ -54,5 +54,15 @@ namespace App.Services
 
             return result;
         }
+
+        public bool IsLibrarian(string userId)
+        {
+            var result = Context.Roles
+                .Include(u => u.User)
+                .Where(x => x.User.UserID == userId && x.UserRole == UserRole.Librarian)
+                .FirstOrDefault();
+
+            return result != null;
+        }
     }
 }

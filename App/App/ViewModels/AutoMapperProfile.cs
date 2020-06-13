@@ -13,6 +13,7 @@ namespace App.ViewModels
             ReviewProfile();
             LocationProfile();
             RoleProfile();
+            BorrowProfile();
         }
         #region UserProfile
         protected void UserProfile()
@@ -68,8 +69,6 @@ namespace App.ViewModels
         {
             CreateMap<Borrow, BorrowFormModel>()
                 .ForMember(d => d.UserId, o => o.MapFrom(s => s.User.UserID))
-                .ForMember(d => d.LibrarianUserId, o => o.MapFrom(s => s.Librarian.UserID))
-                .ForMember(d => d.ReturnLibrarianUserId, o => o.MapFrom(s => s.ReturnLibrarian.UserID))
                 .ForMember(d => d.BookId, o => o.MapFrom(s => s.Book.BookId))
                 .ForMember(d => d.Status, o => o.MapFrom(s => s.Status))
                 .ReverseMap()
