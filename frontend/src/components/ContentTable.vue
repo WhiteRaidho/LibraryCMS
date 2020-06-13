@@ -11,9 +11,11 @@
       <tr v-for="(item, index) in items" :key="index">
         <td v-for="(field, index) in headers" :key="index">
           <router-link :to="generateLink(field.link, item)" v-if="field.link" :class="field.styleClass">
+            <i :class="field.ico"></i>
             {{ item[field.fieldName] }}
           </router-link>
           <span v-else :class="field.styleClass">
+            <i :class="field.ico"></i>
             {{ item[field.fieldName] }}
           </span>
         </td>
@@ -41,7 +43,7 @@ export default class ContentTable extends Vue{
   /*
   example headers structure:
   [{
-    name: "name", fieldName: "fieldName", link?: "/link/{from item[fieldName]}/[from query], styleClass: "class another"
+    name: "name", fieldName: "fieldName", link?: "/link/{from item[fieldName]}/[from query], styleClass: "class another", 
   }]
   */
   @Prop() headers!: any[];
