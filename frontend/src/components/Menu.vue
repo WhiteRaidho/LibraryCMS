@@ -19,7 +19,6 @@ import { Menu } from 'vue-burger-menu';
 })
 export default class MenuBar extends Vue{
   isAdmin() :boolean {
-    console.log(this.$auth.user());
     if(this.$auth.check() && this.$auth.user().isAdmin) return true;
     return false;
   }

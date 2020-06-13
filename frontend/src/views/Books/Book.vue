@@ -24,8 +24,11 @@
         Recenzje
       </div>
       <div class="p8" v-if="canWriteReview">
-        <form name="review">
-          <input type="text" placeholder="Opinia"/>
+        <span class="font-lg">Czytałeś tę książkę, lecz jeszcze jej nie oceniłeś. Zrób to teraz!</span>
+        <form name="review" class="flex-container flex-row" @submit.prevent="onSubmit">
+          <stars class="font-8x m4" :noBackground="true" :changeable="true" :rate="review.rate" :key="review.rate" @changeRating="changeRating" />
+          <input type="text" class="m4" v-model="review.description" placeholder="Opinia"/>
+          <input type="submit" class="button m4" :disabled="formBlocked" value="Wyślij opinię"/>
         </form>
       </div>
       <review v-for="(item, index) in reviews" :key="index" :model="item" />
@@ -36,7 +39,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BooksService, { BookViewModel } from "@/services/BooksService";
-import ReviewsService, { ReviewViewModel } from "@/services/ReviewsService";
+import ReviewsService, { ReviewViewModel, ReviewFormModel } from "@/services/ReviewsService";
 import ContentTable from "@/components/ContentTable.vue";
 import Review from "@/components/Reviews/Review.vue";
 import Stars from "@/components/Reviews/Stars.vue";
@@ -57,8 +60,15 @@ export default class Book extends Vue {
     avgRating: 0  
   };
 
+  private review: ReviewFormModel = {
+    description: "",
+    rate: 3,
+    id: 0
+  };
+
   private reviews: ReviewViewModel[] = [];
   private canWriteReview = false;
+  private formBlocked = false;
 
   private get bookId(): number {
     return Number(this.$route.params.bookId || 0);
@@ -74,10 +84,26 @@ export default class Book extends Vue {
 
   created() {
     this.loadData();
+    this.loadReviews();
+  }
+
+  changeRating(x: number) {
+    this.review.rate = x;
+  }
+
+  async onSubmit() {
+    this.formBlocked = true;
+    try {
+     const response = await ReviewsService.postReviewForBook(this.title, this.author, this.review); 
+     this.canWriteReview = false;
+     this.reviews.push(response);
+     this.loadData();
+    } catch(ex) {
+      console.log("Nie można dodać recenzji //TODO obsługa błędów");
+    }
   }
 
   async loadData() {
-    // Load book data
     try {
       const response = await BooksService.getBook(this.title, this.author);
       this.book = response;
@@ -89,7 +115,10 @@ export default class Book extends Vue {
         avgRating: 0
       };
     }
-    // Load reviews for Book
+  }
+
+  async loadReviews() {
+ // Load reviews for Book
     try {
       const response = await ReviewsService.getReviewsForBook(
         this.title,

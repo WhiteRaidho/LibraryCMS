@@ -12,6 +12,18 @@ input[type=submit] {
     outline: none;
 }
 
+.button:hover,
+button:hover,
+input[type=submit]:hover {
+    background-color: var(--info-color);
+}
+
+.button:disabled,
+button:disabled,
+input[type=submit]:disabled {
+    background-color: var(--main-dark-white-color);
+}
+
 .semi-transparent {
     backdrop-filter: blur(10px);
     background: #f6f6f660;

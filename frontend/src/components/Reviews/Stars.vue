@@ -37,6 +37,7 @@ export default class Stars extends Vue {
 }
 
 .star-container {
+    height: 1.05em;
     padding:2px 6px;
     border-radius: 30px;
     display: inline-block;

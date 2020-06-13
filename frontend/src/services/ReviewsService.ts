@@ -7,9 +7,9 @@ export default class ReviewsService {
         return (await Vue.axios.get<ReviewViewModel[]>(`/reviews/${authorFullName}/${bookTitle}`)).data;
     }
 
-    public static async postReviewForBook(bookTitle: string, authorFullName: string, model: ReviewFormModel) : Promise<Statement>
+    public static async postReviewForBook(bookTitle: string, authorFullName: string, model: ReviewFormModel) : Promise<ReviewViewModel>
     {
-        return (await Vue.axios.post<Statement>(`/reviews/${authorFullName}/${bookTitle}`, model)).data;
+        return (await Vue.axios.post<ReviewViewModel>(`/reviews/${authorFullName}/${bookTitle}`, model)).data;
     }
 
     public static async canWriteReview(bookTitle: string, authorFullName: string) : Promise<boolean>
