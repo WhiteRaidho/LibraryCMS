@@ -90,7 +90,7 @@ namespace App.Controllers
         }
 
 
-        [HttpPut("{bookId}")]
+        [HttpPut("books/{bookId}")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -113,7 +113,7 @@ namespace App.Controllers
             return Accepted();
         }
 
-        [HttpDelete("{bookId}")]
+        [HttpDelete("books/{bookId}")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
