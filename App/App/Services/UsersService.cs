@@ -36,7 +36,10 @@ namespace App.Services
 
         public User GetUserWithBorrows(string id)
         {
-            var user = Context.Users.Include(x => x.Borrows).FirstOrDefault(u => u.UserID == id);
+            var user = Context.Users
+                .Include(x => x.Borrows)
+                .ThenInclude(x => x.Book)
+                .FirstOrDefault(u => u.UserID == id);
             return user;
         }
 

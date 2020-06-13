@@ -39,12 +39,11 @@ namespace App.Controllers
         public async Task<ActionResult> Create([FromBody] ReviewFormModel model, string authorFullName, string bookTitle)
         {
             var entity = Mapper.Map<Review>(model);
-            var reviews = Reviews.GetReviewsForBook(authorFullName, bookTitle);
 
             entity.User = Users.GetUserWithBorrows(User.Identity.Name);
             entity.Book = Books.GetBook(authorFullName, bookTitle);
 
-            var isBorrowed = entity.User.Borrows.FirstOrDefault(b => b.Book.BookId == entity.Book.BookId);
+            var isBorrowed = entity.User.Borrows.FirstOrDefault(b => b.Book.Title == bookTitle && b.Book.AuthorFullName == authorFullName);
 
             if (isBorrowed == null)
                 return Forbid();
@@ -54,7 +53,7 @@ namespace App.Controllers
 
             Reviews.Create(entity);
 
-            return CreatedAtAction(nameof(Fetch), new {id = entity.ReviewId}, Mapper.Map<ReviewFormModel>(entity));
+            return CreatedAtAction(nameof(Fetch), new {id = entity.ReviewId}, Mapper.Map<ReviewViewModel>(entity));
         }
 
 
