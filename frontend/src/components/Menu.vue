@@ -5,15 +5,23 @@
       <router-link to="/">Stron główna</router-link>
       <router-link to="/books">Książki</router-link>
       <router-link to="/libraries">Biblioteki</router-link>
+      <router-link v-if="isAdmin()" to="/admin/main">Panel administratora</router-link>
     </Menu>
   </div>
 </template>
 
 <script lang="ts">
+import { Vue, Component } from "vue-property-decorator";
 import { Menu } from 'vue-burger-menu';
-export default {
-  components: {
-    Menu
+
+@Component({
+  components: { Menu }
+})
+export default class MenuBar extends Vue{
+  isAdmin() :boolean {
+    console.log(this.$auth.user());
+    if(this.$auth.check() && this.$auth.user().isAdmin) return true;
+    return false;
   }
 };
 </script>

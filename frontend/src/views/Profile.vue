@@ -29,7 +29,7 @@ export default class Profile extends Vue {
   private booksCount = 0;
   private avgRatings? = null;
   private lastRate? = null;
-  private user: AuthModel = {firstName: "", lastName: "", userId: "", userName: "", email: "", token: ""};
+  private user: AuthModel = {firstName: "", lastName: "", userId: "", userName: "", email: "", isAdmin: false};
 
   created() {
     this.loadData();

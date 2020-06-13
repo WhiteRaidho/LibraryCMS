@@ -43,7 +43,7 @@ export default class ContentTable extends Vue{
   /*
   example headers structure:
   [{
-    name: "name", fieldName: "fieldName", link?: "/link/{from item[fieldName]}/[from query], styleClass: "class another", 
+    name: "name", fieldName: "fieldName", link?: "/link/{from item[fieldName]}/[from query], styleClass: "class another", ico: "fas fa-ico"
   }]
   */
   @Prop() headers!: any[];

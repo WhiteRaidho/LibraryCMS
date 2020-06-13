@@ -3,6 +3,7 @@ import { Location, Route } from "vue-router";
 import { AxiosInstance } from "axios";
 import { Store } from "vuex";
 import AuthService, { AuthModel, TokenModel } from "@/services/AuthService";
+import { faBalanceScale } from '@fortawesome/free-solid-svg-icons';
 
 interface AuthState {
   loaded: boolean;
@@ -56,7 +57,7 @@ export class AuthHelper implements Auth {
         state: {
           loaded: false,
           authenticated: false,
-          identity: null as any
+          identity: null as any,
         },
         mutations: {
           setLoaded(state, value: boolean) {

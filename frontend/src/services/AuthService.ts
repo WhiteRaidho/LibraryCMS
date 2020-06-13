@@ -80,7 +80,7 @@ export interface AuthModel
     email: string;
     firstName: string;
     lastName: string;
-    token: string; //DELETE this
+    isAdmin: boolean;
 }
 
 export interface RegisterModel
