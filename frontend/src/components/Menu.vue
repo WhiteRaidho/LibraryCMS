@@ -2,10 +2,12 @@
   <div>
     <!-- <div id="bg-overlay"></div> -->
     <Menu noOverlay>
+      <router-link v-if="!isAuth()" to="/login">Login</router-link>
+      <router-link v-if="!isAuth()" to="/register">Rejestracja</router-link>
       <router-link to="/">Stron główna</router-link>
       <router-link to="/books">Książki</router-link>
       <router-link to="/libraries">Biblioteki</router-link>
-      <router-link v-if="isAdmin()" to="/admin/main">Panel administratora</router-link>
+      <router-link v-if="isAdmin()" to="/admin">Panel administratora</router-link>
     </Menu>
   </div>
 </template>
@@ -21,6 +23,10 @@ export default class MenuBar extends Vue{
   isAdmin() :boolean {
     if(this.$auth.check() && this.$auth.user().isAdmin) return true;
     return false;
+  }
+
+  isAuth() :boolean {
+    return this.$auth.check();
   }
 };
 </script>

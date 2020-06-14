@@ -47,13 +47,13 @@ export default class BooksLibraryList extends Vue {
       name: "Tytuł książki",
       fieldName: "title",
       link: "/books/{authorFullName}/{title}",
-      styleClass: "none-decoration font-lg"
+      contentClass: "none-decoration font-lg"
     },
     {
       name: "Autor",
       fieldName: "authorFullName",
       link: "/books?search=[search]&author={authorFullName}&lib=[lib]",
-      styleClass: "none-decoration"
+      contentClass: "none-decoration"
     }
   ];
   private libraryName = "";

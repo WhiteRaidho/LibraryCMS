@@ -9,12 +9,12 @@
     </thead>
     <tbody v-if="items.length > 0">
       <tr v-for="(item, index) in items" :key="index">
-        <td v-for="(field, index) in headers" :key="index">
-          <router-link :to="generateLink(field.link, item)" v-if="field.link" :class="field.styleClass">
+        <td v-for="(field, index) in headers" :key="index" :class="field.columnClass">
+          <router-link :to="generateLink(field.link, item)" v-if="field.link" :class="field.contentClass">
             <i :class="field.ico"></i>
             {{ item[field.fieldName] }}
           </router-link>
-          <span v-else :class="field.styleClass">
+          <span v-else :class="field.contentClass">
             <i :class="field.ico"></i>
             {{ item[field.fieldName] }}
           </span>
@@ -105,5 +105,9 @@ export default class ContentTable extends Vue{
 .content-table tfoot td {
   height: 32px;
   text-align: center;
+}
+
+.action-column {
+  width: 10px;
 }
 </style>

@@ -24,6 +24,7 @@ interface Auth {
 interface AuthRedirect {
   homePage: Location;
   loginPage: Location;
+  forbiddenPage: Location;
 }
 
 export class AuthOptions {
@@ -136,6 +137,11 @@ export class AuthHelper implements Auth {
             next(this.options.routes.homePage);
             return;
           }
+          // eslint-disable-next-line
+          if(to.meta.hasOwnProperty("adminAccess") && typeof to.meta.adminAccess === "boolean" && to.meta.adminAccess === true && this.state.identity.isAdmin === false) {
+            next(this.options.routes.forbiddenPage);
+            return;
+          }
         }
 
         if (Array.isArray(auth) && auth.length > 0) {
@@ -145,6 +151,7 @@ export class AuthHelper implements Auth {
           }
         }
       }
+
 
       next();
     });

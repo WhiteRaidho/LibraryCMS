@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="center-tab semi-transparent">
     <content-table :items="items" :headers="headers" />
   </div>
 </template>

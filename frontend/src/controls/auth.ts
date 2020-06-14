@@ -6,7 +6,8 @@ Vue.use(AuthPlugin, {
     store: store,
     routes: {
         homePage: '/',
-        loginPage: '/login'
+        loginPage: '/login',
+        forbiddenPage: '/forbidden'
         //HACK add pages here if you want to route from Auth 
     }
 });

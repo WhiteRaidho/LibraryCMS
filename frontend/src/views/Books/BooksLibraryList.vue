@@ -1,15 +1,19 @@
 <template>
-  <content-table :items="items" :headers="headers" />
+  <div class="center-tab semi-transparent">
+    <content-table :items="items" :headers="headers" />
+  </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component } from "vue-property-decorator";
 import ContentTable from "@/components/ContentTable.vue";
-import BooksService, { BookListItemViewModel } from "@/services/BooksService.ts";
+import BooksService, {
+  BookListItemViewModel
+} from "@/services/BooksService.ts";
 
 @Component({
-  components:{
-    'content-table': ContentTable
+  components: { 
+    "content-table": ContentTable
   }
 })
 export default class BooksLibraryList extends Vue {
@@ -32,8 +36,7 @@ export default class BooksLibraryList extends Vue {
     try {
       const response = await BooksService.getLibraryBooksList(this.libraryId);
       this.items = response;
-    } 
-    catch (ex) {
+    } catch (ex) {
       this.items = [];
     }
   }

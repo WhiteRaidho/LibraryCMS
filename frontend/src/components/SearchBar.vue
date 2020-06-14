@@ -12,7 +12,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
     name: 'search-bar',
     inheritAttrs: false
 })
-export default class SeachBar extends Vue {
+export default class SearchBar extends Vue {
     @Prop() private text!: string;
     private search = "";
 

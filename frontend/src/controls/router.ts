@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router, { RouteConfig } from "vue-router";
 import Home from "@/views/Home.vue";
+import { component } from 'vue/types/umd';
 
 Vue.use(Router);
 
@@ -9,6 +10,11 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/forbidden",
+    name: "Fobidden",
+    component: () => import("../views/Forbidden.vue")
   },
   {
     path: "/about",
@@ -56,6 +62,43 @@ const routes: Array<RouteConfig> = [
     path: "/libraries",
     name: "Libraries",
     component: () => import("../views/Libraries/Libraries.vue")
+  },
+  //Admin pages
+  {
+    path: "/admin",
+    name: "Admin Page",
+    component: () => import("../views/Admin/Main.vue"),
+    meta: {
+      auth: true,
+      adminAccess: true
+    },
+    children: [
+      {
+        path : "books/:author/:title",
+        name: "Admin - Book",
+        component: () => import("../views/Admin/Book.vue")
+      },
+      {
+        path : "books",
+        name: "Admin - Books",
+        component: () => import("../views/Admin/Books.vue")
+      },
+      {
+        path : "borrows",
+        name: "Admin - Borrows",
+        component: () => import("../views/Admin/Borrows.vue")
+      },
+      {
+        path : "libraries",
+        name: "Admin - Libraries",
+        component: () => import("../views/Admin/Libraries.vue")
+      },
+      {
+        path : "librarians",
+        name: "Admin - Librarians",
+        component: () => import("../views/Admin/Librarians.vue")
+      }
+    ]
   }
 ];
 
