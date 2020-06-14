@@ -27,13 +27,26 @@ namespace App.ViewModels
         #region BookProfile
         protected void BookProfile()
         {
-            CreateMap<Book, BookListItemViewModel>();
+            CreateMap<Book, BookListItemViewModel>()
+                .ForMember(d => d.Copies, o => o.Ignore());
+
             CreateMap<Book, BookViewModel>()
                 .ForMember(d => d.AvgRating, o => o.Ignore());
+
             CreateMap<Book, BookFormModel>()
-                .ForMember(d => d.LibraryId, o => o.MapFrom(s => s.Library.LibraryId))
+                .ForMember(d => d.BookCopies, o => o.Ignore())
                 .ReverseMap()
-                .ForMember(d => d.BookId, o => o.Ignore());
+                .ForMember(d => d.BookId, o => o.Ignore())
+                .ForMember(d => d.Library, o => o.Ignore());
+
+            CreateMap<Book, BookCopieModel>()
+                .ForMember(d => d.Library, o => o.Ignore())
+                .ReverseMap()
+                .ForMember(d => d.AuthorName, o => o.Ignore())
+                .ForMember(d => d.AuthorSurname, o => o.Ignore())
+                .ForMember(d => d.BookId, o => o.Ignore())
+                .ForMember(d => d.Description, o => o.Ignore())
+                .ForMember(d => d.Title, o => o.Ignore());
         }
         #endregion
 

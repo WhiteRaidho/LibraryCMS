@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.ViewModels;
 using AutoMapper;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
@@ -60,19 +61,39 @@ namespace App.Services
         {
             var book = Context.Books
                 .Where(b => b.AuthorFullName == authorFullName)
-                .Where(b => b.Title == b.Title)
+                .Where(b => b.Title == bookTitle)
                 .FirstOrDefault();
             return book;
         }
 
-        public Book Update(Book entity, BookFormModel model)
+        public List<Book> GetBookCopies(string authorFullName, string bookTitle)
         {
-            Mapper.Map(model, entity);
+            var result = Context.Books
+                .Include(b => b.Library)
+                .Where(b => b.AuthorFullName == authorFullName)
+                .Where(b => b.Title == bookTitle)
+                .ToList();
 
-            Update(entity);
-            SaveChanges();
+            return result;
+        }
 
-            return entity;
+        //public Book Update(Book entity, BookFormModel model)
+        //{
+        //    Mapper.Map(model, entity);
+
+        //    Update(entity);
+        //    SaveChanges();
+
+        //    return entity;
+        //}
+
+        public int GetBookCount(string authorFullName, string bookTitle)
+        {
+            int count = Context.Books
+                .Where(b => b.AuthorFullName == authorFullName)
+                .Where(b => b.Title == bookTitle)
+                .Count();
+            return count;
         }
     }
 }

@@ -9,5 +9,6 @@ namespace App.ViewModels
     {
         public string Title { get; set; }
         public string AuthorFullName { get; set; }
+        public int Copies { get; set; }
     }
 }

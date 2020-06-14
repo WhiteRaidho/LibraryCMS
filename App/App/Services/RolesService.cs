@@ -64,5 +64,14 @@ namespace App.Services
 
             return result != null;
         }
+
+        public bool IsAdmin(string userId)
+        {
+            var result = Context.Users
+                .Where(x => x.UserID == userId)
+                .FirstOrDefault();
+            if (result == null) return false;
+            return result.IsAdmin;
+        }
     }
 }
