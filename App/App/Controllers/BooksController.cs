@@ -82,25 +82,83 @@ namespace App.Controllers
             return result;
         }
 
-        //[HttpPost("books")]
-        //[ProducesResponseType(StatusCodes.Status201Created)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesDefaultResponseType]
-        //public async Task<ActionResult> Create([FromBody]BookFormModel model)
-        //{
-        //    var entity = Mapper.Map<Book>(model);
-        //    var library = Libraries.GetLibrary(model.LibraryId);
+        [HttpPost("admin/books")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> Create([FromBody]BookFormModel model)
+        {
+            if (!Roles.IsLibrarian(User.Identity.Name) && !Roles.IsAdmin(User.Identity.Name)) return Forbid();
 
-        //    entity.Library = library;
+            var entity = Mapper.Map<Book>(model);
 
-        //    if (library == null)
-        //        return NotFound();
+            foreach (BookCopieModel copie in model.BookCopies)
+            {
+                if (copie.BookId != 0) continue;
+                var library = Libraries.GetLibrary(copie.Library.LibraryID);
+                if (library == null) return NotFound();
+                Book book = new Book() {
+                    AuthorName = entity.AuthorName,
+                    AuthorSurname = entity.AuthorSurname,
+                    Description = entity.Description,
+                    Library = library,
+                    Title = entity.Title
+                };
+                Books.Create(book);
+            }
 
-        //    Libraries.Create(entity);
+            var result = Mapper.Map<BookFormModel>(entity);
+            var copies = Books.GetBookCopies(entity.AuthorFullName, entity.Title);
+            result.BookCopies = Mapper.Map<IEnumerable<BookCopieModel>>(copies)
+                .ForEach(x => x.Library = Mapper.Map<LibraryListItemModel>(copies.First(c => c.BookId == x.BookId).Library)).ToList();
 
-        //    return CreatedAtAction(nameof(Fetch), new { bookId = entity.BookId }, Mapper.Map<BookFormModel>(entity));
-        //}
+            return CreatedAtAction(nameof(Fetch), new { authorFullName = entity.AuthorFullName, bookTitle = entity.Title }, result);
+        }
 
+        [HttpPut("admin/books")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> Update([FromBody]BookFormModel model)
+        {
+            if (!Roles.IsLibrarian(User.Identity.Name) && !Roles.IsAdmin(User.Identity.Name)) return Forbid();
+
+            var entity = Mapper.Map<Book>(model);
+
+            foreach (BookCopieModel copie in model.BookCopies)
+            {
+                var library = Libraries.GetLibrary(copie.Library.LibraryID);
+                if (library == null) return NotFound();
+                if (copie.BookId != 0)
+                {
+                    Book book = Books.GetBook(copie.BookId);
+                    book.Title = entity.Title;
+                    book.AuthorName = entity.AuthorName;
+                    book.AuthorSurname = entity.AuthorSurname;
+                    book.Description = entity.Description;
+                    Books.Update(book);
+                }
+                else
+                {
+                    Book book = new Book()
+                    {
+                        AuthorName = entity.AuthorName,
+                        AuthorSurname = entity.AuthorSurname,
+                        Description = entity.Description,
+                        Library = library,
+                        Title = entity.Title
+                    };
+                    Books.Create(book);
+                }
+            }
+
+            var result = Mapper.Map<BookFormModel>(entity);
+            var copies = Books.GetBookCopies(entity.AuthorFullName, entity.Title);
+            result.BookCopies = Mapper.Map<IEnumerable<BookCopieModel>>(copies)
+                .ForEach(x => x.Library = Mapper.Map<LibraryListItemModel>(copies.First(c => c.BookId == x.BookId).Library)).ToList();
+
+            return CreatedAtAction(nameof(Fetch), new { authorFullName = entity.AuthorFullName, bookTitle = entity.Title }, result);
+        }
 
         //[HttpPut("books/{bookId}")]
         //[ProducesResponseType(StatusCodes.Status202Accepted)]
@@ -127,20 +185,22 @@ namespace App.Controllers
         //    return Accepted();
         //}
 
-        //[HttpDelete("books/{bookId}")]
-        //[ProducesResponseType(StatusCodes.Status202Accepted)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesDefaultResponseType]
-        //public async Task<ActionResult> Delete(int bookId)
-        //{
-        //    var entity = Books.GetBook(bookId);
+        [HttpDelete("admin/books/{bookId}")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> Delete(int bookId)
+        {
+            if (!Roles.IsLibrarian(User.Identity.Name) && !Roles.IsAdmin(User.Identity.Name)) return Forbid();
 
-        //    if (entity == null)
-        //        return NotFound();
+            var entity = Books.GetBook(bookId);
 
-        //    Books.Remove(entity);
+            if (entity == null)
+                return NotFound();
 
-        //    return Accepted();
-        //}
+            Books.Remove(entity);
+
+            return Accepted();
+        }
     }
 }
