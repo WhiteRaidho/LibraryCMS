@@ -10,11 +10,11 @@
     <tbody v-if="items.length > 0">
       <tr v-for="(item, index) in items" :key="index">
         <td v-for="(field, index) in headers" :key="index" :class="field.columnClass">
-          <router-link :to="generateLink(field.link, item)" v-if="field.link" :class="field.contentClass">
+          <router-link :to="generateLink(field.link, item)" v-if="field.link" :class="field.contentClass" @click="emitOnClick(field, item)">
             <i :class="field.ico"></i>
             {{ item[field.fieldName] }}
           </router-link>
-          <span v-else :class="field.contentClass">
+          <span v-else :class="field.contentClass" v-on:click="emitOnClick(field, item)">
             <i :class="field.ico"></i>
             {{ item[field.fieldName] }}
           </span>
@@ -43,7 +43,8 @@ export default class ContentTable extends Vue{
   /*
   example headers structure:
   [{
-    name: "name", fieldName: "fieldName", link?: "/link/{from item[fieldName]}/[from query], styleClass: "class another", ico: "fas fa-ico"
+    name: "name", fieldName: "fieldName", link?: "/link/{from item[fieldName]}/[from query], columnClass: "class another", contentClass: "class", ico: "fas fa-ico",
+    emitOnClick: "eventName"
   }]
   */
   @Prop() headers!: any[];
@@ -64,6 +65,10 @@ export default class ContentTable extends Vue{
       link = link.replace(a, String(qu));
     });
     return link;
+  }
+
+  emitOnClick(field: any, item: any) {
+    if(field.emitOnClick !== 'undefined') this.$emit(field.emitOnClick, item);
   }
 }
 </script>

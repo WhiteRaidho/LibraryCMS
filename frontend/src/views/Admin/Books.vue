@@ -1,7 +1,9 @@
 <template>
   <div class>
-    <div class="font-2x m8">Książki</div>
+    <div class="font-2x m8 f-left">Książki</div>
+    <router-link class="none-decoration button f-right p8" to="/admin/books/new">Dodaj</router-link>
     <search-bar text="Podaj autora lub tytuł" @submit="searchSubmit" class="m8" />
+    
     <div class="m8"><content-table :items="items" :headers="headers" /></div>
   </div>
 </template>

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { LibraryListItem } from '@/services/LibrariesService';
+import { Statement } from './AuthService';
 
 export default class BooksService{
     public static async getLibraryBooksList(libraryId: number): Promise<BookListItemViewModel[]>
@@ -31,6 +32,21 @@ export default class BooksService{
     public static async getBookCopies(title: string, authorFullName: string) : Promise<BookCopies[]>
     {
         return (await Vue.axios.get<BookCopies[]>(`/admin/books/${authorFullName}/${title}/copies`)).data;
+    }
+
+    public static async postBookForm(model: BookFormModel) : Promise<BookFormModel>
+    {
+        return (await Vue.axios.post<BookFormModel>(`/admin/books`, model)).data;
+    }
+
+    public static async putBookForm(model: BookFormModel) : Promise<BookFormModel>
+    {
+        return (await Vue.axios.put<BookFormModel>(`/admin/books`, model)).data;
+    }
+
+    public static async deleteBook(id: number) : Promise<Statement>
+    {
+        return (await Vue.axios.delete<Statement>(`/admin/books/${id}`)).data;
     }
 }
 

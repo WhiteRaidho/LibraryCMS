@@ -74,6 +74,11 @@ const routes: Array<RouteConfig> = [
     },
     children: [
       {
+        path : "books/new",
+        name: "Admin - New Book",
+        component: () => import("../views/Admin/Book.vue")
+      },
+      {
         path : "books/:author/:title",
         name: "Admin - Book",
         component: () => import("../views/Admin/Book.vue")

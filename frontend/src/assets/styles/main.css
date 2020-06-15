@@ -124,6 +124,28 @@ input[type=checkbox] {
     outline: none;
 }
 
+select {
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: solid 0px;
+    border-radius: 4px;
+    background-color: var(--main-white-color);
+    font-size: 16px;
+    outline: none;
+}
+
+option {
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: solid 0px;
+    border-radius: 4px;
+    background-color: var(--main-white-color);
+    font-size: 16px;
+    outline: none;
+}
+
 .center-absolute-tab {
     position: absolute;
     top: 50%;
@@ -166,4 +188,16 @@ input[type=checkbox] {
 
 .none-decoration {
     text-decoration: none;
+}
+
+.f-right {
+    float: right;
+}
+
+.f-left {
+    float: left;
+}
+
+.pointer {
+    cursor: pointer;
 }
