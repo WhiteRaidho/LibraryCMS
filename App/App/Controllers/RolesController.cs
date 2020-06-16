@@ -4,6 +4,7 @@ using App.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace App.Controllers
@@ -23,6 +24,23 @@ namespace App.Controllers
             Mapper = mapper;
             Roles = rolesService;
             Libraries = librariesService;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<IEnumerable<RoleListItem>>> GetList(int roleId)
+        {
+            var entity = Roles.GetList();
+
+            if (entity == null)
+                return NotFound();
+
+            var result = Mapper.Map<IEnumerable<RoleListItem>>(entity);
+
+            return Ok(result);
         }
 
         [HttpGet("{roleId}")]

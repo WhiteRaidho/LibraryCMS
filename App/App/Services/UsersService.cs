@@ -27,6 +27,14 @@ namespace App.Services
             Hasher = hasher;
         }
 
+        public List<User> GetList()
+        {
+            var list = Context.Users
+                .ToList();
+
+            return list;
+        }
+
         #region GetUser()
         public User GetUser(string id)
         {
@@ -55,7 +63,7 @@ namespace App.Services
         {
             var user = Context.Users.FirstOrDefault(u => u.UserName == username);
             return user;
-        } 
+        }
         #endregion
 
 
@@ -69,7 +77,7 @@ namespace App.Services
 
         public string GetRefreshToken(User user)
         {
-            if(String.IsNullOrEmpty(user.RefreshToken))
+            if (String.IsNullOrEmpty(user.RefreshToken))
             {
                 user.RefreshToken = Hasher.HashPassword(user, Guid.NewGuid().ToString())
                     .Replace("+", string.Empty)

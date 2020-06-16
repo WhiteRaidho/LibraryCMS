@@ -95,7 +95,7 @@ namespace App.Controllers
             foreach (BookCopieModel copie in model.BookCopies)
             {
                 if (copie.BookId != 0) continue;
-                var library = Libraries.GetLibrary(copie.Library.LibraryID);
+                var library = Libraries.GetLibrary(copie.Library.LibraryId);
                 if (library == null) return NotFound();
                 Book book = new Book() {
                     AuthorName = entity.AuthorName,
@@ -127,7 +127,7 @@ namespace App.Controllers
 
             foreach (BookCopieModel copie in model.BookCopies)
             {
-                var library = Libraries.GetLibrary(copie.Library.LibraryID);
+                var library = Libraries.GetLibrary(copie.Library.LibraryId);
                 if (library == null) return NotFound();
                 if (copie.BookId != 0)
                 {

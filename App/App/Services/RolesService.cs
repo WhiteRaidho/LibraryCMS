@@ -13,6 +13,16 @@ namespace App.Services
         {
         }
 
+        public List<Role> GetList()
+        {
+            var list = Context.Roles
+                .Include(x => x.Library)
+                .Include(x => x.User)
+                .ToList();
+
+            return list;
+        }
+
         public Role GetRole(int roleId)
         {
             var entity = Context.Roles
@@ -59,7 +69,7 @@ namespace App.Services
         {
             var result = Context.Roles
                 .Include(u => u.User)
-                .Where(x => x.User.UserID == userId && x.UserRole == UserRole.Librarian)
+                .Where(x => x.User.UserID == userId && (x.UserRole == UserRole.Librarian || x.UserRole == UserRole.Manager))
                 .FirstOrDefault();
 
             return result != null;

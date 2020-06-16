@@ -14,11 +14,13 @@ namespace App.Controllers
     public class LocationsController : ControllerBase
     {
         protected LocationsService Locations { get; }
+        protected RolesService Roles { get; }
         protected IMapper Mapper { get; }
 
-        public LocationsController(LocationsService locationsService, IMapper mapper)
+        public LocationsController(LocationsService locationsService, RolesService rolesService, IMapper mapper)
         {
             Locations = locationsService;
+            Roles = rolesService;
             Mapper = mapper;
         }
 
@@ -57,6 +59,8 @@ namespace App.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Create([FromBody] LocationFormModel model)
         {
+            if (!Roles.IsLibrarian(User.Identity.Name) && !Roles.IsAdmin(User.Identity.Name)) return Forbid();
+
             var entity = Mapper.Map<Location>(model);
 
             Locations.Create(entity);
@@ -73,6 +77,8 @@ namespace App.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Update([FromBody]LocationFormModel model, int locationId)
         {
+            if (!Roles.IsLibrarian(User.Identity.Name) && !Roles.IsAdmin(User.Identity.Name)) return Forbid();
+
             var entity = Locations.GetLocation(locationId);
 
             if (entity == null)
@@ -90,6 +96,8 @@ namespace App.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(int locationId)
         {
+            if (!Roles.IsLibrarian(User.Identity.Name) && !Roles.IsAdmin(User.Identity.Name)) return Forbid();
+
             var entity = Locations.GetLocation(locationId);
 
             if (entity == null)

@@ -24,12 +24,33 @@ namespace App.Controllers
     {
         protected IMapper Mapper { get; }
         protected UsersService Users { get; }
+        protected RolesService Roles { get; }
 
-        public UsersController(IMapper mapper, UsersService usersService)
+        public UsersController(IMapper mapper, UsersService usersService, RolesService rolesService)
         {
             Mapper = mapper;
             Users = usersService;
+            Roles = rolesService;
         }
+
+        #region GetList()
+        // GET: api/Users/me
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<IEnumerable<UserViewModel>>> GetList()
+        {
+            if (!Roles.IsAdmin(User.Identity.Name)) return Forbid();
+
+            var list = Users.GetList();
+            if (list == null) return NotFound();
+
+            var result = Mapper.Map<IEnumerable<UserViewModel>>(list);
+            return Ok(result);
+        }
+        #endregion
 
         #region GetMe()
         // GET: api/Users/me

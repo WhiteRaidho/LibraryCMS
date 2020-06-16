@@ -105,9 +105,14 @@ namespace App.ViewModels
             CreateMap<Role, RoleFormModel>()
                 .ForMember(d => d.LibraryId, o => o.MapFrom(s => s.Library.LibraryId))
                 .ForMember(d => d.UserId, o => o.MapFrom(s => s.User.UserID))
-                .ForMember(d => d.UserRole, o => o.MapFrom(s => s.UserRole))
+                .ForMember(d => d.UserRole, o => o.MapFrom(s => (int)s.UserRole))
                 .ReverseMap()
                 .ForMember(d => d.RoleId, o => o.Ignore());
+
+            CreateMap<Role, RoleListItem>()
+                .ForMember(d => d.Username, o => o.MapFrom(s => s.User.UserName))
+                .ForMember(d => d.libraryName, o => o.MapFrom(s => s.Library.Name))
+                .ForMember(d => d.UserRole, o => o.MapFrom(s => (int)s.UserRole));
         }
         #endregion
     }
