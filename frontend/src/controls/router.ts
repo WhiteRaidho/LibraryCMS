@@ -73,6 +73,7 @@ const routes: Array<RouteConfig> = [
       adminAccess: true
     },
     children: [
+      //Books
       {
         path : "books/new",
         name: "Admin - New Book",
@@ -88,16 +89,45 @@ const routes: Array<RouteConfig> = [
         name: "Admin - Books",
         component: () => import("../views/Admin/Books.vue")
       },
+      //Borrows
       {
         path : "borrows",
         name: "Admin - Borrows",
         component: () => import("../views/Admin/Borrows.vue")
+      },
+      //Libraries
+      {
+        path : "libraries/new",
+        name: "Admin - New Library",
+        component: () => import("../views/Admin/Library.vue")
+      },
+      {
+        path : "libraries/:id",
+        name: "Admin - Library",
+        component: () => import("../views/Admin/Library.vue")
       },
       {
         path : "libraries",
         name: "Admin - Libraries",
         component: () => import("../views/Admin/Libraries.vue")
       },
+      //Locations
+      {
+        path: "locations/new",
+        name: "Admin - New Location",
+        component: () => import("../views/Admin/Location.vue")
+      },
+      {
+        path : "locations/:id",
+        name: "Admin - Location",
+        component: () => import("../views/Admin/Location.vue")
+      },
+      {
+        path : "locations",
+        name: "Admin - Locations",
+        component: () => import("../views/Admin/Locations.vue")
+      },
+      //Librarians
       {
         path : "librarians",
         name: "Admin - Librarians",
