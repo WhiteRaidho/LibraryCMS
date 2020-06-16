@@ -8,23 +8,23 @@ namespace App.ViewModels
 {
     public class BookFormModel
     {
-        [Required]
-        [MaxLength(32, ErrorMessage = "Book title is to long (max 32 characters)")]
-        [MinLength(1, ErrorMessage = "Book title is to short (min 1 characters)")]
+        [Required(ErrorMessage = "Tytuł jest wymagany")]
+        [MaxLength(32, ErrorMessage = "Tytuł jest zbyt długi (max 32 znaków)")]
+        [MinLength(1, ErrorMessage = "Tytuł jest zbyt krótki (min 1 znak)")]
         public string Title { get; set; }
 
-        [Required]
-        [MaxLength(1024, ErrorMessage = "Description is to long (max 1024 characters)")]
+        [Required(ErrorMessage = "Opis jest wymagany")]
+        [MaxLength(1024, ErrorMessage = "Opis jest zbyt długi (max 1024 znaków)")]
         public string Description { get; set; }
 
-        [Required]
-        [MaxLength(32, ErrorMessage = "Name is to long (max 32 characters)")]
-        [MinLength(2, ErrorMessage = "Name is to short (min 2 characters)")]
+        [Required(ErrorMessage = "Imię autora jest wymagane")]
+        [MaxLength(32, ErrorMessage = "Imię jest zbyt długie (max 32 characters)")]
+        [MinLength(2, ErrorMessage = "Imię jest zbyt krótkie (min 2 characters)")]
         public string AuthorName { get; set; }
 
-        [Required]
-        [MaxLength(32, ErrorMessage = "Surname is to long (max 32 characters)")]
-        [MinLength(2, ErrorMessage = "Surname is to short (min 2 characters)")]
+        [Required(ErrorMessage = "Nazwisko autora jest wymagane")]
+        [MaxLength(32, ErrorMessage = "Nazwisko jest zbyt długie (max 32 characters)")]
+        [MinLength(2, ErrorMessage = "Nazwisko jest zbyt krótkie (min 2 characters)")]
         public string AuthorSurname { get; set; }
 
         public List<BookCopieModel> BookCopies { get; set; }
