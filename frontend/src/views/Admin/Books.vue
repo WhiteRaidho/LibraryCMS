@@ -1,18 +1,24 @@
 <template>
-  <div class>
-    <div class="font-2x m8 f-left">Książki</div>
-    <router-link class="none-decoration button f-right p8" to="/admin/books/new">Dodaj</router-link>
+  <div>
+    <div class="m8">
+      <div class="font-2x f-left title-header ">Książki</div>
+      <router-link class="none-decoration button f-right p8" to="/admin/books/new">Dodaj</router-link>
+    </div>
     <search-bar text="Podaj autora lub tytuł" @submit="searchSubmit" class="m8" />
-    
-    <div class="m8"><content-table :items="items" :headers="headers" /></div>
+
+    <div class="m8">
+      <content-table :items="items" :headers="headers" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import ContentTable from "@/components/ContentTable.vue";
-import BooksService, { BookListItemViewModel } from "@/services/BooksService.ts";
+import BooksService, {
+  BookListItemViewModel
+} from "@/services/BooksService.ts";
 import SearchBar from "@/components/SearchBar.vue";
+import ContentTable from "@/components/ContentTable.vue";
 
 @Component({
   components: {
@@ -23,16 +29,18 @@ import SearchBar from "@/components/SearchBar.vue";
 export default class AdminBooks extends Vue {
   private headers = [
     {
-      name: "Tytuł książki", fieldName: "title",
+      name: "Tytuł książki",
+      fieldName: "title",
       link: "/admin/books/{authorFullName}/{title}",
       contentClass: "none-decoration"
     },
     {
-      name: "Autor", fieldName: "authorFullName",
+      name: "Autor",
+      fieldName: "authorFullName",
       //link: "/admin/books?search=[search]&author={authorFullName}",
       contentClass: "none-decoration"
     },
-    {name: "Egzemplarze", fieldName: "copies"},
+    { name: "Egzemplarze", fieldName: "copies" }
     // {name: "", link: "/home", ico: "fas fa-trash", columnClass: "action-column"},
     // {name: "", ico: "fas fa-pencil-alt", columnClass: "action-column"}
   ];
@@ -83,5 +91,9 @@ export default class AdminBooks extends Vue {
 <style scoped>
 .flex-row > a {
   margin: 4px;
+}
+
+.title-header {
+  margin-bottom: 16px;
 }
 </style>

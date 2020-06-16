@@ -1,16 +1,19 @@
 <template>
   <div>
-    <div v-if="!editMode">{{ model.title }}</div>
-    <form @submit.prevent="onSubmit" v-else>
+    <form @submit.prevent="onSubmit" >
       <input v-model="model.title" placeholder="Tytuł" type="text" />
+      <input-error v-bind:errors="err.Title" />
       <input v-model="model.authorName" placeholder="Imię autora" type="text" />
+      <input-error v-bind:errors="err.AuthorName" />
       <input v-model="model.authorSurname" placeholder="Nazwisko autora" type="text" />
+      <input-error v-bind:errors="err.AuthorSurname" />
       <textarea v-model="model.description" placeholder="Opis" type="textarea" rows="3" />
+      <input-error v-bind:errors="err.Description" />
       <input type="submit" value="Zapisz zmiany" />
     </form>
     <div class="flex-container flex-row">
-      <select v-model="selectedLibrary" class="f-left">
-        <option v-for="lib in libraries" v-bind:value="lib" :key="lib.Id">{{ lib.name }}</option>
+      <select v-model="selectedLibrary" :options="libraries" class="f-left">
+        <option v-for="lib in libraries" v-bind:value="lib" :key="lib.libraryID">{{ lib.name }}</option>
       </select>
       <button class="f-right" v-on:click="addCopie">Dodaj</button>
     </div>
@@ -24,14 +27,18 @@ import BooksService, { BookFormModel, BookCopies } from "@/services/BooksService
 import LibrariesService, { LibraryListItem } from "@/services/LibrariesService";
 import ContentTable from "@/components/ContentTable.vue";
 import Book from "../Books/Book.vue";
+import InputError from "@/components/InputError.vue";
+import CustomSelect from "@/components/CustomSelect.vue";
 
 @Component({
   components: {
-    ContentTable
+    ContentTable,
+    InputError,
+    CustomSelect
   }
 })
 export default class AdminBook extends Vue {
-  private editMode = true;
+  private err: any;
   private model: BookFormModel = {
     title: "",
     authorName: "",
@@ -42,7 +49,7 @@ export default class AdminBook extends Vue {
 
   private libraries: LibraryListItem[] = [];
   private selectedLibrary: LibraryListItem = {
-    id: 0,
+    libraryID: 0,
     name: "Brak bibliotek w bazie danych",
     locationName: "",
     locationStreet: ""
@@ -84,6 +91,13 @@ export default class AdminBook extends Vue {
   }
 
   created() {
+    this.err = {
+      Title: [],
+      AuthorName: [],
+      AuthorSurname: [],
+      Description: [],
+    };
+
     this.loadLibraries();
     if (this.author !== "undefined" && this.title !== "undefined")
       this.loadData();
@@ -97,7 +111,7 @@ export default class AdminBook extends Vue {
       if (this.libraries.length > 0) this.selectedLibrary = this.libraries[0];
       else
         this.selectedLibrary = {
-          id: 0,
+          libraryID: 0,
           name: "Brak bibliotek w bazie danych",
           locationName: "",
           locationStreet: ""
@@ -105,7 +119,7 @@ export default class AdminBook extends Vue {
     } catch (ex) {
       this.libraries = [];
       this.selectedLibrary = {
-        id: 0,
+        libraryID: 0,
         name: "Brak bibliotek w bazie danych",
         locationName: "",
         locationStreet: ""
@@ -154,7 +168,8 @@ export default class AdminBook extends Vue {
         );
       }
     } catch (ex) {
-      console.log(ex);
+      this.err = ex.errors;
+      this.$forceUpdate();
     }
   }
 
@@ -164,7 +179,6 @@ export default class AdminBook extends Vue {
   }
 
   async deleteCopie(item: any) {
-    console.log(item);
     const toRemove = this.model.bookCopies.find(obj => obj.bookId == item.id && obj.library.name == item.library);
     if(toRemove === undefined) return;
     const index = this.model.bookCopies.indexOf(toRemove);
@@ -178,7 +192,7 @@ export default class AdminBook extends Vue {
 </script>
 
 <style scoped>
-form > input {
+form > div, form > input {
   margin-bottom: 8px;
 }
 </style>

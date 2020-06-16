@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="center-tab semi-transparent button-tab">
-      <router-link to="/admin/books" class="button none-decoration">Książki</router-link>
       <router-link to="/admin/borrows" class="button none-decoration">Wypożyczenia</router-link>
       <router-link to="/admin/libraries" class="button none-decoration">Biblioteki</router-link>
+      <router-link to="/admin/locations" class="button none-decoration">Lokacje</router-link>
       <router-link to="/admin/librarians" class="button none-decoration">Pracownicy</router-link>
+      <router-link to="/admin/books" class="button none-decoration">Książki</router-link>
     </div>
     <div class="center-tab semi-transparent">
       <router-view></router-view>

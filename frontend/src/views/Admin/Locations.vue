@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="m8">
-      <div class="font-2x f-left title-header">Biblioteki</div>
-      <router-link class="none-decoration button f-right p8" to="/admin/libraries/new">Dodaj</router-link>
+      <div class="font-2x f-left title-header">Lokacje</div>
+      <router-link class="none-decoration button f-right p8" to="/admin/locations/new">Dodaj</router-link>
     </div>
     <!-- <search-bar text="Podaj nazwę biblioteki" class="m8" /> -->
 
@@ -14,7 +14,9 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import LibrariesService, { LibraryListItem } from "@/services/LibrariesService";
+import LocationsService, {
+  LocationFormModel
+} from "@/services/LocationsService";
 
 import SearchBar from "@/components/SearchBar.vue";
 import ContentTable from "@/components/ContentTable.vue";
@@ -27,19 +29,19 @@ import ContentTable from "@/components/ContentTable.vue";
 })
 export default class AdminLibraries extends Vue {
   private headers = [
-    { name: "Id", fieldName: "libraryID" },
+    { name: "Id", fieldName: "locationId" },
     {
-      name: "Nazwa",
+      name: "Miasto",
       fieldName: "name",
       contentClass: "none-decoration",
-      link: "/admin/libraries/{libraryID}"
+      link: "/admin/locations/{locationId}"
     },
-    { name: "Miasto", fieldName: "locationName" },
-    { name: "Adres", fieldName: "locationStreet" },
+    { name: "Kod pocztowy", fieldName: "zipCode" },
+    { name: "Ulica", fieldName: "street" },
     { name: "", ico: "fas fa-trash", emitOnClick: "deleteItem", columnClass: "action-column", contentClass: "pointer" }
   ];
 
-  private items: LibraryListItem[] = [];
+  private items: LocationFormModel[] = [];
 
   created() {
     this.loadData();
@@ -49,17 +51,16 @@ export default class AdminLibraries extends Vue {
     this.items = [];
 
     try {
-      const response = await LibrariesService.getList();
+      const response = await LocationsService.getList();
       this.items = response;
     } catch (ex) {
       this.items = [];
     }
   }
 
-  async deleteItem(item: any) {
-    console.log("delete");
+  async deleteItem(item: LocationFormModel) {
     try {
-      await LibrariesService.deleteLibrary(item.libraryID);
+      await LocationsService.deleteLocation(item.locationId);
       this.loadData();
     } catch (ex) {
       console.log(ex);
