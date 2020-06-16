@@ -6,7 +6,7 @@
       <span class="l-col">Przeczytane książki</span>
       <span class="r-col">{{ booksCount }}</span>
       <span class="l-col">Średnia ocen</span>
-      <span v-if="avgRatings" class="r-col">{{ avgRatings }}</span>
+      <span v-if="avgRatings" class="r-col">{{ avgRatings.toFixed(1) }}</span>
       <span v-else class="r-col">brak ocen</span>
     </div>
   </div>
@@ -25,7 +25,7 @@ export default class Profile extends Vue {
   private email = "";
   private booksCount = 0;
   private avgRatings? = 0;
-  private user: AuthModel = {firstName: "", lastName: "", userId: "", userName: "", email: "", isAdmin: false};
+  private user: AuthModel = {firstName: "", lastName: "", userId: "", userName: "", email: "", isAdmin: false, isLibrarian: false};
 
   created() {
     this.loadData();
@@ -73,5 +73,6 @@ export default class Profile extends Vue {
 .r-col {
   grid-column: 2 / 2;
   text-align: left;
+  font-weight: bold;
 }
 </style>

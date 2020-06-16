@@ -49,7 +49,7 @@ export default class AdminBook extends Vue {
 
   private libraries: LibraryListItem[] = [];
   private selectedLibrary: LibraryListItem = {
-    libraryID: 0,
+    libraryId: 0,
     name: "Brak bibliotek w bazie danych",
     locationName: "",
     locationStreet: ""
@@ -111,7 +111,7 @@ export default class AdminBook extends Vue {
       if (this.libraries.length > 0) this.selectedLibrary = this.libraries[0];
       else
         this.selectedLibrary = {
-          libraryID: 0,
+          libraryId: 0,
           name: "Brak bibliotek w bazie danych",
           locationName: "",
           locationStreet: ""
@@ -119,7 +119,7 @@ export default class AdminBook extends Vue {
     } catch (ex) {
       this.libraries = [];
       this.selectedLibrary = {
-        libraryID: 0,
+        libraryId: 0,
         name: "Brak bibliotek w bazie danych",
         locationName: "",
         locationStreet: ""

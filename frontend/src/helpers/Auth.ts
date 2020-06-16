@@ -138,6 +138,13 @@ export class AuthHelper implements Auth {
             return;
           }
           // eslint-disable-next-line
+          if(to.meta.hasOwnProperty("librarianAccess") && typeof to.meta.librarianAccess === "boolean") {
+            if(to.meta.librarianAccess === true && this.state.identity.isLibrarian === false && this.state.identity.isAdmin === false) {
+              next(this.options.routes.forbiddenPage);
+              return;
+            }
+          }
+          // eslint-disable-next-line
           if(to.meta.hasOwnProperty("adminAccess") && typeof to.meta.adminAccess === "boolean" && to.meta.adminAccess === true && this.state.identity.isAdmin === false) {
             next(this.options.routes.forbiddenPage);
             return;

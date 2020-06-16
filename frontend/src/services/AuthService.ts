@@ -90,6 +90,7 @@ export interface AuthModel
     firstName: string;
     lastName: string;
     isAdmin: boolean;
+    isLibrarian: boolean;
 }
 
 export interface RegisterModel
