@@ -14,14 +14,14 @@ namespace App.Controllers
     [ApiController]
     public class LibrariesController : ControllerBase
     {
-        protected LocationService Location { get; }
+        protected LocationsService Locations { get; }
         protected LibrariesService Libraries { get; }
         protected IMapper Mapper { get; }
 
 
-        public LibrariesController(LibrariesService librariesService, IMapper mapper, LocationService locationService)
+        public LibrariesController(LibrariesService librariesService, IMapper mapper, LocationsService locationsService)
         {
-            Location = locationService;
+            Locations = locationsService;
             Libraries = librariesService;
             Mapper = mapper;
         }
@@ -63,7 +63,7 @@ namespace App.Controllers
         public async Task<ActionResult> Create([FromBody]LibraryFormModel model)
         {
             var entity = Mapper.Map<Library>(model);
-            var location = Location.GetLocation(model.LocationId);
+            var location = Locations.GetLocation(model.LocationId);
 
             if (location == null)
                 return NotFound();
@@ -83,7 +83,7 @@ namespace App.Controllers
         public async Task<ActionResult> Update([FromBody]LibraryFormModel model, int libraryId)
         {
             var entity = Libraries.GetLibrary(libraryId);
-            var location = Location.GetLocation(model.LocationId);
+            var location = Locations.GetLocation(model.LocationId);
             entity.Location = location;
 
             if (location == null)
