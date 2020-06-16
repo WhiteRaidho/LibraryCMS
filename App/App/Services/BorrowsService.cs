@@ -2,6 +2,7 @@
 using App.ViewModels;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace App.Services
@@ -31,6 +32,15 @@ namespace App.Services
                 .FirstOrDefault(x => x.User.UserID == userId && x.Book.Title == bookTitle && x.Book.AuthorFullName == authorFullName);
 
             return entity != null;
+        }
+
+        public int GetUserInactiveBooksCount(String userId)
+        {
+            var entity = Context.Borrows
+                .Where(x => x.User.UserID == userId && x.Status == BorrowStatus.Inactive)
+                .Count();
+
+            return entity;
         }
     }
 }

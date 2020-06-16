@@ -24,10 +24,14 @@ namespace App.Controllers
     {
         protected IMapper Mapper { get; }
         protected UsersService Users { get; }
+        protected BorrowsService Borrows { get; }
+        protected ReviewsService Reviews { get; }
         protected RolesService Roles { get; }
 
-        public UsersController(IMapper mapper, UsersService usersService, RolesService rolesService)
+        public UsersController(IMapper mapper, UsersService usersService, BorrowsService borrowsService, ReviewsService reviewsService, RolesService rolesService)
         {
+            Borrows = borrowsService;
+            Reviews = reviewsService;
             Mapper = mapper;
             Users = usersService;
             Roles = rolesService;
@@ -166,79 +170,22 @@ namespace App.Controllers
             return Ok();
         }
         #endregion
-        //// GET: api/Users/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<User>> GetUser(string id)
-        //{
-        //    var user = await _context.Users.FindAsync(id);
 
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [Authorize]
+        [HttpGet("profileView")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<ProfileViewModel>> GetPropertiesForProfile()
+        {
+            ProfileViewModel entity = new ProfileViewModel();
+            var booksCount = Borrows.GetUserInactiveBooksCount(User.Identity.Name);
+            var avgRating = Reviews.GetAvgUserRate(User.Identity.Name);
 
-        //    return user;
-        //}
+            entity.BooksCount = booksCount;
+            entity.AvgRatings = avgRating;
 
-        //// PUT: api/Users/5
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutUser(string id, User user)
-        //{
-        //    if (id != user.UserID)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(user).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!UserExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        //// POST: api/Users
-        //[HttpPost]
-        //public async Task<ActionResult<User>> PostUser(User user)
-        //{
-        //    _context.Users.Add(user);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetUser", new { id = user.UserID }, user);
-        //}
-
-        //// DELETE: api/Users/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<User>> DeleteUser(string id)
-        //{
-        //    var user = await _context.Users.FindAsync(id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Users.Remove(user);
-        //    await _context.SaveChangesAsync();
-
-        //    return user;
-        //}
-
-        //private bool UserExists(string id)
-        //{
-        //    return _context.Users.Any(e => e.UserID == id);
-        //}
+            return entity;
+        }
     }
 }

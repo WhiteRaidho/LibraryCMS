@@ -1,6 +1,7 @@
 ﻿using App.Models;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -53,6 +54,14 @@ namespace App.Services
                 .FirstOrDefault();
 
             return !(entity == null);
+        }
+
+        public double GetAvgUserRate(string userId)
+        {
+            var entity = Context.Reviews
+                .Where(x => x.User.UserID == userId).Select(x => x.Rate).Average();
+
+            return entity;
         }
     }
 }

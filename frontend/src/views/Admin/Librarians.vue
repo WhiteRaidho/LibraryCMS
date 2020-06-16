@@ -29,7 +29,8 @@ export default class AdminBooks extends Vue {
     {
       name: "Użytkownik",
       fieldName: "username",
-      contentClass: "none-decoration"
+      contentClass: "none-decoration",
+      link: "librarians/{roleId}"
     },
     { name: "Biblioteka", fieldName: "libraryName" },
     { name: "Stanowisko", fieldName: "userRoleName" },

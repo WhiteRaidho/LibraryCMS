@@ -5,9 +5,6 @@
     <div class="last-actions container">
       <span class="l-col">Przeczytane książki</span>
       <span class="r-col">{{ booksCount }}</span>
-      <span class="l-col">Ostatnia ocena</span>
-      <span v-if="lastRate" class="r-col">{{ lastRate }}</span>
-      <span v-else class="r-col">brak ocen</span>
       <span class="l-col">Średnia ocen</span>
       <span v-if="avgRatings" class="r-col">{{ avgRatings }}</span>
       <span v-else class="r-col">brak ocen</span>
@@ -27,8 +24,7 @@ export default class Profile extends Vue {
   private lastName = "";
   private email = "";
   private booksCount = 0;
-  private avgRatings? = null;
-  private lastRate? = null;
+  private avgRatings? = 0;
   private user: AuthModel = {firstName: "", lastName: "", userId: "", userName: "", email: "", isAdmin: false};
 
   created() {
@@ -38,7 +34,10 @@ export default class Profile extends Vue {
   async loadData() {
     try {
       const response = await AuthService.getIdentity();
+      const profileData = await AuthService.getProfileData();
       this.user = response;
+      this.booksCount = profileData.booksCount;
+      this.avgRatings = profileData.avgRatings;
     } catch (ex) {
       console.log(ex);
     }

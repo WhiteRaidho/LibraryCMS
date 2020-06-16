@@ -63,6 +63,10 @@ export default class AuthService
         return (await Vue.axios.get<AuthModel[]>('users')).data;
     }
 
+    public static async getProfileData() : Promise<ProfileViewModel>
+    {
+        return (await Vue.axios.get<ProfileViewModel>('users/profileView')).data;
+    }
 }
 
 export interface TokenModel
@@ -95,4 +99,10 @@ export interface RegisterModel
     password: string;
     firstName: string;
     lastName: string;
+}
+
+export interface ProfileViewModel
+{
+    booksCount: number;
+    avgRatings: number;
 }

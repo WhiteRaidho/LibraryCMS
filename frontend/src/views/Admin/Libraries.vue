@@ -27,12 +27,12 @@ import ContentTable from "@/components/ContentTable.vue";
 })
 export default class AdminLibraries extends Vue {
   private headers = [
-    { name: "Id", fieldName: "libraryID" },
+    { name: "Id", fieldName: "libraryId" },
     {
       name: "Nazwa",
       fieldName: "name",
       contentClass: "none-decoration",
-      link: "/admin/libraries/{libraryID}"
+      link: "/admin/libraries/{libraryId}"
     },
     { name: "Miasto", fieldName: "locationName" },
     { name: "Adres", fieldName: "locationStreet" },
