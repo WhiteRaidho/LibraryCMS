@@ -24,9 +24,13 @@ namespace App.Controllers
     {
         protected IMapper Mapper { get; }
         protected UsersService Users { get; }
+        protected BorrowsService Borrows { get; }
+        protected ReviewsService Reviews { get; }
 
-        public UsersController(IMapper mapper, UsersService usersService)
+        public UsersController(IMapper mapper, UsersService usersService, BorrowsService borrowsService, ReviewsService reviewsService)
         {
+            Borrows = borrowsService;
+            Reviews = reviewsService;
             Mapper = mapper;
             Users = usersService;
         }
@@ -219,5 +223,21 @@ namespace App.Controllers
         //{
         //    return _context.Users.Any(e => e.UserID == id);
         //}
+        [Authorize]
+        [HttpGet("profileView")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<ProfileViewModel>> GetPropertiesForProfile()
+        {
+            ProfileViewModel entity = new ProfileViewModel();
+            var booksCount = Borrows.GetUserInactiveBooksCount(User.Identity.Name);
+            var avgRating = Reviews.GetAvgUserRate(User.Identity.Name);
+
+            entity.BooksCount = booksCount;
+            entity.AvgRatings = avgRating;
+
+            return entity;
+        }
     }
 }
