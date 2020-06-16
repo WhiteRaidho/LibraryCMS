@@ -68,7 +68,7 @@ export default class ContentTable extends Vue{
   }
 
   emitOnClick(field: any, item: any) {
-    if(field.emitOnClick !== 'undefined') this.$emit(field.emitOnClick, item);
+    if(field.emitOnClick !== undefined) this.$emit(field.emitOnClick, item);
   }
 }
 </script>
