@@ -129,6 +129,16 @@ const routes: Array<RouteConfig> = [
       },
       //Librarians
       {
+        path : "librarians/new",
+        name: "Admin - New Librarian",
+        component: () => import("../views/Admin/Librarian.vue")
+      },
+      {
+        path : "librarians/:id",
+        name: "Admin - Librarian",
+        component: () => import("../views/Admin/Librarian.vue")
+      },
+      {
         path : "librarians",
         name: "Admin - Librarians",
         component: () => import("../views/Admin/Librarians.vue")

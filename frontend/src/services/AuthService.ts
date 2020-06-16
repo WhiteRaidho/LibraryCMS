@@ -58,6 +58,11 @@ export default class AuthService
         return (await Vue.axios.post<Statement>('users', model)).data;
     }
 
+    public static async getUserList() : Promise<AuthModel[]>
+    {
+        return (await Vue.axios.get<AuthModel[]>('users')).data;
+    }
+
 }
 
 export interface TokenModel

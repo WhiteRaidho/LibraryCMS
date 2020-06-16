@@ -29,7 +29,7 @@ export default class LibrariesService{
 }
 
 export interface LibraryListItem{
-    libraryID: number;
+    libraryId: number;
     name: string;
     locationName: string;
     locationStreet: string;
