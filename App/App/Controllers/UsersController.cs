@@ -38,7 +38,6 @@ namespace App.Controllers
         }
 
         #region GetList()
-        // GET: api/Users/me
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -68,6 +67,9 @@ namespace App.Controllers
             if (me == null) return NotFound();
 
             var result = Mapper.Map<UserViewModel>(me);
+
+            result.IsLibrarian = Roles.IsLibrarian(me.UserID);
+
             return (ActionResult<UserViewModel>)result;
         }
         #endregion
@@ -171,6 +173,7 @@ namespace App.Controllers
         }
         #endregion
 
+        #region GetPropertiesForProfile()
         [Authorize]
         [HttpGet("profileView")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -187,5 +190,6 @@ namespace App.Controllers
 
             return entity;
         }
+        #endregion
     }
 }

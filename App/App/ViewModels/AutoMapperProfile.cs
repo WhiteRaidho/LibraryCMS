@@ -15,10 +15,13 @@ namespace App.ViewModels
             RoleProfile();
             BorrowProfile();
         }
+
         #region UserProfile
         protected void UserProfile()
         {
-            CreateMap<User, UserViewModel>();
+            CreateMap<User, UserViewModel>()
+                .ForMember(d => d.IsLibrarian, o => o.Ignore());
+
             CreateMap<RegisterViewModel, User>()
                 .ForMember(d => d.UserPassword, o => o.MapFrom(s => s.Password));
         }
