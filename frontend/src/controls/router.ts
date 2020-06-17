@@ -63,6 +63,30 @@ const routes: Array<RouteConfig> = [
     name: "Libraries",
     component: () => import("../views/Libraries/Libraries.vue")
   },
+  //Librarian
+  {
+    path: "/librarian",
+    name: "Librarian Page",
+    component: () => import("../views/Librarian/Main.vue"),
+    meta: {
+      auth: true,
+      librarianAccess: true
+    },
+    children: [
+      //Borrow book
+      {
+        path : "borrow",
+        name: "Librarian - Borrow",
+        component: () => import("../views/Librarian/Borrow.vue")
+      },
+      //Return book
+      {
+        path: "return",
+        name: "Librarian - Return",
+        component: () => import("../views/Librarian/Return.vue")
+      }
+    ]
+  },
   //Admin pages
   {
     path: "/admin",
@@ -144,7 +168,7 @@ const routes: Array<RouteConfig> = [
         component: () => import("../views/Admin/Librarians.vue")
       }
     ]
-  }
+  },
 ];
 
 const router = new Router({

@@ -11,7 +11,7 @@ import '@/controls/axios';
 import '@/controls/auth';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSearch, faTimesCircle, faStar, faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimesCircle, faStar, faTrash, faPencilAlt, faAddressBook, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 
@@ -21,6 +21,8 @@ library.add(faTimesCircle);
 library.add(faStar);
 library.add(faTrash);
 library.add(faPencilAlt);
+library.add(faAddressBook);
+library.add(faArrowAltCircleRight);
 Vue.component('ico', FontAwesomeIcon)
 dom.watch();
 

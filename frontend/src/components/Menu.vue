@@ -8,6 +8,7 @@
       <router-link to="/books">Książki</router-link>
       <router-link to="/libraries">Biblioteki</router-link>
       <router-link v-if="isAdmin()" to="/admin">Panel administratora</router-link>
+      <router-link v-if="isLibrarian()" to="/librarian">Panel bibliotekarza</router-link>
     </Menu>
   </div>
 </template>
@@ -27,6 +28,10 @@ export default class MenuBar extends Vue{
 
   isAuth() :boolean {
     return this.$auth.check();
+  }
+
+  isLibrarian() :boolean {
+    return this.$auth.check() && (this.$auth.user().isLibrarian || this.$auth.user().isAdmin);
   }
 };
 </script>

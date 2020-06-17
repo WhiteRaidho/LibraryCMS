@@ -48,6 +48,16 @@ export default class BooksService{
     {
         return (await Vue.axios.delete<Statement>(`/admin/books/${id}`)).data;
     }
+
+    public static async getAvalibleBooks(search: string, author: string) : Promise<AvalibleBookListItemViewModel[]>
+    {
+        return (await Vue.axios.get<AvalibleBookListItemViewModel[]>(`/avalibleBooks`, {
+            params: {
+                search: search,
+                author: author
+            }
+        })).data;
+    }
 }
 
 export interface BookListItemViewModel{
@@ -74,4 +84,10 @@ export interface BookFormModel {
 export interface BookCopies {
     bookId: number;
     library: LibraryListItem;
+}
+
+export interface AvalibleBookListItemViewModel {
+    bookId: number;
+    title: string;
+    AuthorFullName: string;
 }
