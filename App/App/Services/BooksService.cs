@@ -57,6 +57,37 @@ namespace App.Services
             return books;
         }
 
+        public List<Book> GetAvalibleBooks(string search, string authorFullName)
+        {
+            var predicate = PredicateBuilder.New<Book>(true);
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                var splited = search.Split(' ');
+                foreach (string str in splited)
+                {
+                    predicate.And(p => p.Title.ToLower().Contains(str.ToLower()));
+                    predicate.Or(p => p.AuthorFullName.ToLower().Contains(str.ToLower()));
+                }
+            }
+            if (!String.IsNullOrEmpty(authorFullName))
+            {
+                predicate.And(p => p.AuthorFullName.ToLower().Contains(authorFullName.ToLower()));
+            }
+
+            var activeBooks = Context.Borrows
+                .Where(x => x.Status == BorrowStatus.Active)
+                .Select(y => y.Book)
+                .ToList();
+
+            var result = Context.Books
+                .Except(activeBooks)
+                .Where(predicate)
+                .ToList();
+
+            return result;
+        }
+
         public Book GetBook(string authorFullName, string bookTitle)
         {
             var book = Context.Books

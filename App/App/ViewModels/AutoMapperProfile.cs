@@ -50,6 +50,8 @@ namespace App.ViewModels
                 .ForMember(d => d.BookId, o => o.Ignore())
                 .ForMember(d => d.Description, o => o.Ignore())
                 .ForMember(d => d.Title, o => o.Ignore());
+
+            CreateMap<Book, AvalibleBookListItemViewModel>();
         }
         #endregion
 
@@ -88,7 +90,8 @@ namespace App.ViewModels
                 .ForMember(d => d.BookId, o => o.MapFrom(s => s.Book.BookId))
                 .ForMember(d => d.Status, o => o.MapFrom(s => s.Status))
                 .ReverseMap()
-                .ForMember(d => d.BorrowId, o => o.Ignore());
+                .ForMember(d => d.BorrowId, o => o.Ignore())
+                .ForMember(d => d.ReturnTime, o => o.Ignore());
         }
         #endregion
 

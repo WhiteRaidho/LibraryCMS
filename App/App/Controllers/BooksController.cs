@@ -47,6 +47,21 @@ namespace App.Controllers
             return (ActionResult<IEnumerable<BookListItemViewModel>>)result;
         }
 
+        [HttpGet("avalibleBooks")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<IEnumerable<AvalibleBookListItemViewModel>>> GetAvalibleBooks([FromQuery]string search, [FromQuery]string author)
+        {
+            var books = Books.GetAvalibleBooks(search, author);
+
+            if (books == null)
+                return NotFound();
+
+            var result = Mapper.Map<IEnumerable<AvalibleBookListItemViewModel>>(books).ToList();
+            return (ActionResult<IEnumerable<AvalibleBookListItemViewModel>>)result;
+        }
+
         [HttpGet("books/{authorFullName}/{bookTitle}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

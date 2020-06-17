@@ -45,7 +45,7 @@ namespace App.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<IEnumerable<UserViewModel>>> GetList()
         {
-            if (!Roles.IsAdmin(User.Identity.Name)) return Forbid();
+            if (!Roles.IsAdmin(User.Identity.Name) && !Roles.IsLibrarian(User.Identity.Name)) return Forbid();
 
             var list = Users.GetList();
             if (list == null) return NotFound();
