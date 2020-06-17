@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace App.Controllers
@@ -26,6 +27,20 @@ namespace App.Controllers
             Users = usersService;
             Mapper = mapper;
             Borrows = borrowsService;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<BorrowFormModel>> GetList()
+        {
+            var list = Borrows.GetList();
+
+            if (list == null)
+                return NotFound();
+
+            return Ok(Mapper.Map<IEnumerable<BorrowFormModel>>(list));
         }
 
         [HttpGet("{borrowId}")]
