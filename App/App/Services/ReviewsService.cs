@@ -40,7 +40,7 @@ namespace App.Services
                 .Include(r => r.Book)
                 .Where(r => r.Book.Title == book.Title && r.Book.AuthorFullName == book.AuthorFullName);
 
-            if(rating.Count() > 0)
+            if(rating.Any())
                 return rating.Average(r => (float)r.Rate);
             return 0;
         }
@@ -59,9 +59,13 @@ namespace App.Services
         public double GetAvgUserRate(string userId)
         {
             var entity = Context.Reviews
-                .Where(x => x.User.UserID == userId).Select(x => x.Rate).Average();
+                .Include(x => x.User)
+                .Where(x => x.User.UserID == userId);
+            
+            if(entity.Any())
+                return entity.Average(r => (float)r.Rate);
 
-            return entity;
+            return 0;
         }
     }
 }
