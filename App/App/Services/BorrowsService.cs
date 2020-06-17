@@ -3,6 +3,7 @@ using App.ViewModels;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace App.Services
@@ -13,6 +14,18 @@ namespace App.Services
 
         public BorrowsService(ApplicationDbContext context, IMapper mapper ) : base(context, mapper)
         {
+        }
+
+        public List<Borrow> GetList()
+        {
+            var list = Context.Borrows
+                .Include(x => x.Book)
+                .Include(x => x.User)
+                .Include(x => x.Librarian)
+                .Include(x => x.ReturnLibrarian)
+                .ToList();
+
+            return list;
         }
 
         public Borrow GetBorrow(int bookId)
