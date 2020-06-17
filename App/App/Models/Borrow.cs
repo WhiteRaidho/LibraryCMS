@@ -26,7 +26,8 @@ namespace App.Models
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime BorrowTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime BorrowTime { get; set; } = DateTime.UtcNow;
 
         [DataType(DataType.DateTime)]
         public DateTime? ReturnTime { get; set; }
