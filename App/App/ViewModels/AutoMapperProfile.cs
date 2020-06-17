@@ -92,6 +92,12 @@ namespace App.ViewModels
                 .ReverseMap()
                 .ForMember(d => d.BorrowId, o => o.Ignore())
                 .ForMember(d => d.ReturnTime, o => o.Ignore());
+
+            CreateMap<Borrow, BorrowListItemModel>()
+                .ForMember(d => d.AuthorFullName, o => o.MapFrom(s => s.Book.AuthorFullName))
+                .ForMember(d => d.FirstName, o => o.MapFrom(s => s.User.FirstName))
+                .ForMember(d => d.LastName, o => o.MapFrom(s => s.User.LastName))
+                .ForMember(d => d.Title, o => o.MapFrom(s => s.Book.Title));
         }
         #endregion
 

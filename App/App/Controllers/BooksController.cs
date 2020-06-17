@@ -50,9 +50,12 @@ namespace App.Controllers
         [HttpGet("avalibleBooks")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult<IEnumerable<AvalibleBookListItemViewModel>>> GetAvalibleBooks([FromQuery]string search, [FromQuery]string author)
         {
+            if (!Roles.IsAdmin(User.Identity.Name) && !Roles.IsLibrarian(User.Identity.Name)) return Forbid();
+
             var books = Books.GetAvalibleBooks(search, author);
 
             if (books == null)
