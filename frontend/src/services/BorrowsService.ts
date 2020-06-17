@@ -2,9 +2,13 @@ import Vue from 'vue';
 import { Statement } from './AuthService';
 
 export default class BorrowsService{
-    public static async getList(): Promise<BorrowFormModel[]>
+    public static async getList(search: string): Promise<BorrowListItemModel[]>
     {
-        return (await Vue.axios.get<BorrowFormModel[]>('borrows')).data;
+        return (await Vue.axios.get<BorrowListItemModel[]>('borrows',{
+            params: {
+                search: search
+            }}
+            )).data;
     }
 
     public static async getBorrow(id: number) : Promise<BorrowFormModel>
@@ -17,14 +21,9 @@ export default class BorrowsService{
         return (await Vue.axios.post<BorrowFormModel>(`borrows`, model)).data;
     }
 
-    public static async putBorrow(model: BorrowFormModel, id: number) : Promise<Statement>
+    public static async ReturnBook(id: number) : Promise<Statement>
     {
-        return (await Vue.axios.put<Statement>(`borrows/${id}`, model)).data;
-    }
-
-    public static async deleteBorrow(id: number) : Promise<Statement>
-    {
-        return (await Vue.axios.delete<Statement>(`borrows/${id}`)).data;
+        return (await Vue.axios.put<Statement>(`borrows/${id}`)).data;
     }
 }
 
@@ -37,4 +36,12 @@ export interface BorrowFormModel{
     borrowTime: Date,
     returnTime: Date | null,
     status: number
+}
+
+export interface BorrowListItemModel {
+    borrowId: number,
+    title: string,
+    authorFullName: string,
+    firstName: string,
+    lastName: string
 }

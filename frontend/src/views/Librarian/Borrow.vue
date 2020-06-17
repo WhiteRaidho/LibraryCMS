@@ -102,7 +102,7 @@ export default class Borrow extends Vue {
       if (item != null) {
         this.model.userId = item.userId;
         this.model.bookId = this.bookId;
-        BorrowService.postBorrow(this.model);
+        await BorrowService.postBorrow(this.model);
         this.loadData();
       }
     } catch (er) {
