@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <input type="text" v-model="model.name" placeholder="Nazwa" />
+    <input type="text" v-model="model.name" placeholder="Miasto" />
     <input-error v-bind:errors="err.Name" />
     <input type="text" v-model="model.zipCode" placeholder="Kod pocztowy (format: 00-000)" />
     <input-error v-bind:errors="err.ZipCode" />

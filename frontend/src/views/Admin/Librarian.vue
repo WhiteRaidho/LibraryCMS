@@ -1,18 +1,20 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <select v-model="model.userId" :options="users" class="m8">
+    <select v-model="model.userId" class="m8">
+      <option value="" selected disabled hidden >Wybierz osobę</option>
       <option v-for="user in users" v-bind:value="user.userId" :key="user.userId">
         {{ user.firstName }} {{ user.lastName }}, {{ user.userName}}, {{ user.email }}
       </option>
     </select>
     <input-error v-bind:errors="err.UserId" />
-    <select v-model="model.libraryId" :options="libraries" class="m8">
+    <select v-model="model.libraryId" class="m8">
+      <option value="0" selected disabled hidden >Wybierz Bibliotekę</option>
       <option v-for="lib in libraries" v-bind:value="lib.libraryId" :key="lib.libraryId">
         {{ lib.name }}, {{lib.locationName}}, {{ lib.locationStreet }}
       </option>
     </select>
     <input-error v-bind:errors="err.LibraryId" />
-    <select v-model="model.userRole" :options="roles" class="m8">
+    <select v-model="model.userRole" class="m8">
       <option v-for="role in roles" v-bind:value="role.value" :key="role.value">
         {{ role.text }}
       </option>

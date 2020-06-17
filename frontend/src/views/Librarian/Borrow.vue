@@ -1,14 +1,14 @@
 <template>
   <div class="books">
-    <search-bar text="Podaj tytuł książki lub autora..." @submit="searchSubmit" />
+    <search-bar text="Podaj tytuł książki lub autora..." @submit="searchSubmit" v-if="!bookId"/>
     <div v-if="author || search" class="filters">
-      <div v-if="search" class="filter">
+      <div v-if="search && !bookId" class="filter">
         Wyszukiwanie: {{ search }}
         <span v-on:click="resetFilter('search')">
           <i class="fas fa-times-circle pointer"></i>
         </span>
       </div>
-      <div v-if="author" class="filter">
+      <div v-if="author && !bookId" class="filter">
         Autor: {{ author }}
         <span v-on:click="resetFilter('author')">
           <i class="fas fa-times-circle pointer"></i>

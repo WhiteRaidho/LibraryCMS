@@ -9,13 +9,12 @@
         <img src="@/assets/svg_icons/Person.svg" class="image" />
         <!-- <ico icon="fa-user-circle"></ico> -->
       </router-link>
-      <router-link to="/" class="router-link">
+      <!-- <router-link to="/" class="router-link">
         <img src="@/assets/svg_icons/Bookmark.svg" class="image" />
       </router-link>
       <router-link to="/About" class="router-link">
         <img src="@/assets/svg_icons/Heart.svg" class="image" />
-        <!-- <i class="far fa-heart"></i> -->
-      </router-link>
+      </router-link> -->
       <img src="@/assets/svg_icons/SignOut.svg" class="image" v-on:click="logout()" />
       <!-- <router-link to="/About" class="router-link">
         <i class="fa fa-heart image"></i>

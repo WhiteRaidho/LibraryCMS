@@ -58,7 +58,7 @@ export default class AdminLibraries extends Vue {
 
   async deleteItem(item: any) {
     try {
-      await LibrariesService.deleteLibrary(item.libraryID);
+      await LibrariesService.deleteLibrary(item.libraryId);
       this.loadData();
     } catch (ex) {
       console.log(ex);
