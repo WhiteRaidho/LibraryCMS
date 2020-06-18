@@ -22,7 +22,7 @@
             <input v-model="form.lastName" type="text" id="lastName" placeholder="Nazwisko"/>
             <input-error v-bind:errors="err.LastName" />
         </div>
-        <div class="p8 font-sm">Klikając Zarejestruj, wyrażasz zgodę na na: Umowę użytkownika, Politykę ochrony prywatności i Zasady korzystania z plików cookie. </div>
+        <div class="p8 font-sm">Klikając Zarejestruj, wyrażasz zgodę na: Umowę użytkownika, Politykę ochrony prywatności i Zasady korzystania z plików cookie. </div>
         <div class="p8">
             <input  type="submit" value="Zarejestruj" class="register-button" />
         </div> 
